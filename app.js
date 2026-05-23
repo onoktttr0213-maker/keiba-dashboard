@@ -482,7 +482,8 @@ function showError() {
 async function loadGasData() {
     try {
         console.log('Fetching data from Google Sheets...');
-        const response = await fetch(GAS_URL);
+        const cacheBuster = Date.now();
+        const response = await fetch(`${GAS_URL}?t=${cacheBuster}`);
         if (!response.ok) throw new Error('Network response was not ok');
         
         const data = await response.json();
