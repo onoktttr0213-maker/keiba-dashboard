@@ -304,12 +304,9 @@
                         </h3>
                         <div class="flex justify-center mb-4">
                             <div id="qr-code-container"
-                                class="w-48 h-48 md:w-64 md:h-64 bg-white rounded-lg flex items-center justify-center">
-                                <img id="qr-code-image" src="" alt="PayPay QRコード"
-                                    class="w-full h-full object-contain hidden">
-                                <div class="text-gray-400 text-sm p-4">
-                                    ※QRコード画像をここに配置してください
-                                </div>
+                                class="w-48 h-48 md:w-64 md:h-64 bg-white rounded-lg flex items-center justify-center p-2">
+                                <img id="qr-code-image" src="images/qr.png" alt="PayPay QRコード"
+                                    class="w-full h-full object-contain">
                             </div>
                         </div>
                         <p class="text-gray-400 text-sm">
@@ -397,22 +394,7 @@
     </footer>
 
 
-    <script>
-        // QR code handler - Load from LocalStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            const qrCodeImage = document.getElementById('qr-code-image');
-            const qrCodeData = localStorage.getItem('keibaQRCodeImage');
 
-            if (qrCodeData && qrCodeImage) {
-                qrCodeImage.src = qrCodeData;
-                qrCodeImage.classList.remove('hidden');
-                const placeholder = qrCodeImage.parentElement.querySelector('div');
-                if (placeholder) {
-                    placeholder.classList.add('hidden');
-                }
-            }
-        });
-    </script>
     <script src="app.js"></script>
 </body>
 

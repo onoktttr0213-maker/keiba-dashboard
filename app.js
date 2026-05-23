@@ -510,15 +510,7 @@ async function loadGasData() {
                 }
             }
             
-            if (data.settings.qrImageUrl) {
-                const qrCodeImage = document.getElementById('qr-code-image');
-                if (qrCodeImage) {
-                    qrCodeImage.src = data.settings.qrImageUrl;
-                    qrCodeImage.classList.remove('hidden');
-                    const placeholder = qrCodeImage.parentElement?.querySelector('div');
-                    if (placeholder) placeholder.classList.add('hidden');
-                }
-            }
+
         }
 
         // 3. Render Views
