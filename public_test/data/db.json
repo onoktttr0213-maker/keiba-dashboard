@@ -1,0 +1,1977 @@
+{
+  "venueData": [
+    {
+      "raceName": "京都金杯",
+      "date": "20260104",
+      "venue": "京都",
+      "totalInvestment": 2000,
+      "totalPayout": 8580,
+      "balance": 6580,
+      "hitTypes": [
+        "単勝"
+      ],
+      "races": [
+        {
+          "raceName": "京都金杯",
+          "date": "20260104",
+          "venue": "京都",
+          "betType": "単勝",
+          "investment": 1100,
+          "payout": 8580,
+          "hitStatus": "的中15",
+          "balance": 7480
+        },
+        {
+          "raceName": "京都金杯",
+          "date": "20260104",
+          "venue": "京都",
+          "betType": "3連単1・2着ながし",
+          "investment": 900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -900
+        }
+      ]
+    },
+    {
+      "raceName": "中山金杯",
+      "date": "20260104",
+      "venue": "中山",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "中山金杯",
+          "date": "20260104",
+          "venue": "中山",
+          "betType": "3連複軸1頭ながし",
+          "investment": 1500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1500
+        },
+        {
+          "raceName": "中山金杯",
+          "date": "20260104",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        }
+      ]
+    },
+    {
+      "raceName": "フェアリーS",
+      "date": "20260111",
+      "venue": "中山",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "フェアリーS",
+          "date": "20260111",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "シンザン記念",
+      "date": "20260112",
+      "venue": "京都",
+      "totalInvestment": 1500,
+      "totalPayout": 0,
+      "balance": -1500,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "シンザン記念",
+          "date": "20260112",
+          "venue": "京都",
+          "betType": "3連複フォーメーション",
+          "investment": 1500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1500
+        }
+      ]
+    },
+    {
+      "raceName": "ニューイヤーS",
+      "date": "20260112",
+      "venue": "中山",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "ニューイヤーS",
+          "date": "20260112",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -400
+        },
+        {
+          "raceName": "ニューイヤーS",
+          "date": "20260112",
+          "venue": "中山",
+          "betType": "3連複軸1頭ながし",
+          "investment": 600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -600
+        }
+      ]
+    },
+    {
+      "raceName": "カーバンクルS",
+      "date": "20260117",
+      "venue": "中山",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "カーバンクルS",
+          "date": "20260117",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
+        },
+        {
+          "raceName": "カーバンクルS",
+          "date": "20260117",
+          "venue": "中山",
+          "betType": "3連単1・2着ながし",
+          "investment": 600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -600
+        },
+        {
+          "raceName": "カーバンクルS",
+          "date": "20260117",
+          "venue": "中山",
+          "betType": "3連単1・3着ながし",
+          "investment": 600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -600
+        }
+      ]
+    },
+    {
+      "raceName": "小倉山特別",
+      "date": "20260118",
+      "venue": "京都",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "小倉山特別",
+          "date": "20260118",
+          "venue": "京都",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "大津特別",
+      "date": "20260118",
+      "venue": "中山",
+      "totalInvestment": 100,
+      "totalPayout": 0,
+      "balance": -100,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "大津特別",
+          "date": "20260118",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -100
+        }
+      ]
+    },
+    {
+      "raceName": "日経新春杯",
+      "date": "20260118",
+      "venue": "京都",
+      "totalInvestment": 800,
+      "totalPayout": 0,
+      "balance": -800,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "日経新春杯",
+          "date": "20260118",
+          "venue": "京都",
+          "betType": "単勝",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
+        }
+      ]
+    },
+    {
+      "raceName": "京成杯",
+      "date": "20260118",
+      "venue": "中山",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "京成杯",
+          "date": "20260118",
+          "venue": "中山",
+          "betType": "3連複フォーメーション",
+          "investment": 3000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -3000
+        }
+      ]
+    },
+    {
+      "raceName": "小倉牝馬S",
+      "date": "20260124",
+      "venue": "小倉",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "小倉牝馬S",
+          "date": "20260124",
+          "venue": "小倉",
+          "betType": "3連複フォーメーション",
+          "investment": 1900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1900
+        },
+        {
+          "raceName": "小倉牝馬S",
+          "date": "20260124",
+          "venue": "小倉",
+          "betType": "3連単",
+          "investment": 100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -100
+        }
+      ]
+    },
+    {
+      "raceName": "プロキオンS",
+      "date": "20260125",
+      "venue": "京都",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "プロキオンS",
+          "date": "20260125",
+          "venue": "京都",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "AJCC",
+      "date": "20260125",
+      "venue": "京都",
+      "totalInvestment": 5800,
+      "totalPayout": 0,
+      "balance": -5800,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "AJCC",
+          "date": "20260125",
+          "venue": "京都",
+          "betType": "3連単フォーメーション",
+          "investment": 3000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -3000
+        },
+        {
+          "raceName": "AJCC",
+          "date": "20260125",
+          "venue": "中山",
+          "betType": "3連単フォーメーション",
+          "investment": 2800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2800
+        }
+      ]
+    },
+    {
+      "raceName": "シルクロードS",
+      "date": "20260201",
+      "venue": "京都",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "シルクロードS",
+          "date": "20260201",
+          "venue": "京都",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "シルクロードS",
+          "date": "20260201",
+          "venue": "京都",
+          "betType": "3連複フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "シルクロードS",
+          "date": "20260201",
+          "venue": "京都",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "根岸S",
+      "date": "20260201",
+      "venue": "東京",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "根岸S",
+          "date": "20260201",
+          "venue": "東京",
+          "betType": "単勝",
+          "investment": 100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -100
+        },
+        {
+          "raceName": "根岸S",
+          "date": "20260201",
+          "venue": "東京",
+          "betType": "単勝",
+          "investment": 900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -900
+        },
+        {
+          "raceName": "根岸S",
+          "date": "20260201",
+          "venue": "東京",
+          "betType": "複勝",
+          "investment": 100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -100
+        },
+        {
+          "raceName": "根岸S",
+          "date": "20260201",
+          "venue": "東京",
+          "betType": "3連複フォーメーション",
+          "investment": 900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -900
+        }
+      ]
+    },
+    {
+      "raceName": "東京新聞杯",
+      "date": "20260210",
+      "venue": "東京",
+      "totalInvestment": 1700,
+      "totalPayout": 0,
+      "balance": -1700,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "東京新聞杯",
+          "date": "20260210",
+          "venue": "東京",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "東京新聞杯",
+          "date": "20260210",
+          "venue": "東京",
+          "betType": "3連複フォーメーション",
+          "investment": 700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -700
+        }
+      ]
+    },
+    {
+      "raceName": "クイーンC",
+      "date": "20260214",
+      "venue": "東京",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "クイーンC",
+          "date": "20260214",
+          "venue": "東京",
+          "betType": "3連単1・2着ながし",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        },
+        {
+          "raceName": "クイーンC",
+          "date": "20260214",
+          "venue": "東京",
+          "betType": "3連単1・2着ながし",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        },
+        {
+          "raceName": "クイーンC",
+          "date": "20260214",
+          "venue": "東京",
+          "betType": "3連単1・3着ながし",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        },
+        {
+          "raceName": "クイーンC",
+          "date": "20260214",
+          "venue": "東京",
+          "betType": "3連単1・3着ながし",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        }
+      ]
+    },
+    {
+      "raceName": "サウジC",
+      "date": "20260215",
+      "venue": "Ｋアブドゥルアジーズ（サウジアラビア）",
+      "totalInvestment": 2200,
+      "totalPayout": 0,
+      "balance": -2200,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "サウジC",
+          "date": "20260215",
+          "venue": "Ｋアブドゥルアジーズ（サウジアラビア）",
+          "betType": "3連単1・2着ながし",
+          "investment": 1100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1100
+        },
+        {
+          "raceName": "サウジC",
+          "date": "20260215",
+          "venue": "Ｋアブドゥルアジーズ（サウジアラビア）",
+          "betType": "3連単1・3着ながし",
+          "investment": 1100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1100
+        }
+      ]
+    },
+    {
+      "raceName": "共同通信杯",
+      "date": "20260215",
+      "venue": "東京",
+      "totalInvestment": 2800,
+      "totalPayout": 0,
+      "balance": -2800,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "共同通信杯",
+          "date": "20260215",
+          "venue": "東京",
+          "betType": "3連単フォーメーション",
+          "investment": 2800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2800
+        }
+      ]
+    },
+    {
+      "raceName": "京都記念",
+      "date": "20260215",
+      "venue": "京都",
+      "totalInvestment": 1400,
+      "totalPayout": 0,
+      "balance": -1400,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "京都記念",
+          "date": "20260215",
+          "venue": "京都",
+          "betType": "3連単1・2着ながし",
+          "investment": 700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -700
+        },
+        {
+          "raceName": "京都記念",
+          "date": "20260215",
+          "venue": "京都",
+          "betType": "3連単1・3着ながし",
+          "investment": 700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -700
+        }
+      ]
+    },
+    {
+      "raceName": "阪急杯",
+      "date": "20260221",
+      "venue": "阪神",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "阪急杯",
+          "date": "20260221",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -700
+        },
+        {
+          "raceName": "阪急杯",
+          "date": "20260221",
+          "venue": "阪神",
+          "betType": "3連複フォーメーション",
+          "investment": 1300,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1300
+        }
+      ]
+    },
+    {
+      "raceName": "ダイヤモンドS",
+      "date": "20260221",
+      "venue": "東京",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "ダイヤモンドS",
+          "date": "20260221",
+          "venue": "東京",
+          "betType": "3連複フォーメーション",
+          "investment": 1500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1500
+        },
+        {
+          "raceName": "ダイヤモンドS",
+          "date": "20260221",
+          "venue": "東京",
+          "betType": "単勝",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        }
+      ]
+    },
+    {
+      "raceName": "フェブラリーS",
+      "date": "20260222",
+      "venue": "東京",
+      "totalInvestment": 4200,
+      "totalPayout": 0,
+      "balance": -4200,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "フェブラリーS",
+          "date": "20260222",
+          "venue": "東京",
+          "betType": "3連単1着ながし",
+          "investment": 4200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -4200
+        }
+      ]
+    },
+    {
+      "raceName": "小倉大賞典",
+      "date": "20260222",
+      "venue": "小倉",
+      "totalInvestment": 3800,
+      "totalPayout": 0,
+      "balance": -3800,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "小倉大賞典",
+          "date": "20260222",
+          "venue": "小倉",
+          "betType": "単勝",
+          "investment": 600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -600
+        },
+        {
+          "raceName": "小倉大賞典",
+          "date": "20260222",
+          "venue": "小倉",
+          "betType": "3連複軸2頭ながし",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
+        },
+        {
+          "raceName": "小倉大賞典",
+          "date": "20260222",
+          "venue": "小倉",
+          "betType": "3連単フォーメーション",
+          "investment": 2400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2400
+        }
+      ]
+    },
+    {
+      "raceName": "オーシャンS",
+      "date": "20260228",
+      "venue": "中山",
+      "totalInvestment": 2100,
+      "totalPayout": 0,
+      "balance": -2100,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "オーシャンS",
+          "date": "20260228",
+          "venue": "中山",
+          "betType": "3連単フォーメーション",
+          "investment": 2100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2100
+        }
+      ]
+    },
+    {
+      "raceName": "チューリップ賞",
+      "date": "20260301",
+      "venue": "阪神",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "チューリップ賞",
+          "date": "20260301",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -700
+        },
+        {
+          "raceName": "チューリップ賞",
+          "date": "20260301",
+          "venue": "阪神",
+          "betType": "3連複軸2頭ながし",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
+        },
+        {
+          "raceName": "チューリップ賞",
+          "date": "20260301",
+          "venue": "阪神",
+          "betType": "3連単1・2着ながし",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        }
+      ]
+    },
+    {
+      "raceName": "中山記念",
+      "date": "20260301",
+      "venue": "中山",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "中山記念",
+          "date": "20260301",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
+        },
+        {
+          "raceName": "中山記念",
+          "date": "20260301",
+          "venue": "中山",
+          "betType": "3連単1着ながし",
+          "investment": 1200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1200
+        }
+      ]
+    },
+    {
+      "raceName": "フィリーズR",
+      "date": "20260307",
+      "venue": "阪神",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "フィリーズR",
+          "date": "20260307",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "中山牝馬S",
+      "date": "20260307",
+      "venue": "中山",
+      "totalInvestment": 800,
+      "totalPayout": 0,
+      "balance": -800,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "中山牝馬S",
+          "date": "20260307",
+          "venue": "中山",
+          "betType": "3連単フォーメーション",
+          "investment": 400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -400
+        },
+        {
+          "raceName": "中山牝馬S",
+          "date": "20260307",
+          "venue": "中山",
+          "betType": "3連単フォーメーション",
+          "investment": 400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -400
+        }
+      ]
+    },
+    {
+      "raceName": "弥生賞ディープインパクト記念",
+      "date": "20260308",
+      "venue": "中山",
+      "totalInvestment": 1200,
+      "totalPayout": 0,
+      "balance": -1200,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "弥生賞ディープインパクト記念",
+          "date": "20260308",
+          "venue": "中山",
+          "betType": "3連単フォーメーション",
+          "investment": 1200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1200
+        }
+      ]
+    },
+    {
+      "raceName": "金鯱賞",
+      "date": "20260315",
+      "venue": "中京",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "金鯱賞",
+          "date": "20260315",
+          "venue": "中京",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "金鯱賞",
+          "date": "20260315",
+          "venue": "中京",
+          "betType": "3連複軸1頭ながし",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "スプリングS",
+      "date": "20260315",
+      "venue": "中山",
+      "totalInvestment": 1400,
+      "totalPayout": 0,
+      "balance": -1400,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "スプリングS",
+          "date": "20260315",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -400
+        },
+        {
+          "raceName": "スプリングS",
+          "date": "20260315",
+          "venue": "中山",
+          "betType": "3連複軸1頭ながし",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "愛知杯",
+      "date": "20260321",
+      "venue": "中京",
+      "totalInvestment": 2100,
+      "totalPayout": 0,
+      "balance": -2100,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "愛知杯",
+          "date": "20260321",
+          "venue": "中京",
+          "betType": "3連複軸1頭ながし",
+          "investment": 2100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2100
+        }
+      ]
+    },
+    {
+      "raceName": "阪神大賞典",
+      "date": "20260321",
+      "venue": "阪神",
+      "totalInvestment": 4000,
+      "totalPayout": 0,
+      "balance": -4000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "阪神大賞典",
+          "date": "20260321",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "阪神大賞典",
+          "date": "20260321",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "阪神大賞典",
+          "date": "20260321",
+          "venue": "阪神",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "阪神大賞典",
+          "date": "20260321",
+          "venue": "阪神",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "フラワーC",
+      "date": "20260321",
+      "venue": "中山",
+      "totalInvestment": 2100,
+      "totalPayout": 0,
+      "balance": -2100,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "フラワーC",
+          "date": "20260321",
+          "venue": "中山",
+          "betType": "3連複軸1頭ながし",
+          "investment": 2100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2100
+        }
+      ]
+    },
+    {
+      "raceName": "毎日杯",
+      "date": "20260328",
+      "venue": "阪神",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "毎日杯",
+          "date": "20260328",
+          "venue": "阪神",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        },
+        {
+          "raceName": "毎日杯",
+          "date": "20260328",
+          "venue": "阪神",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "日経賞",
+      "date": "20260328",
+      "venue": "中山",
+      "totalInvestment": 1500,
+      "totalPayout": 0,
+      "balance": -1500,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "日経賞",
+          "date": "20260328",
+          "venue": "中山",
+          "betType": "3連複軸1頭ながし",
+          "investment": 1500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1500
+        }
+      ]
+    },
+    {
+      "raceName": "マーチS",
+      "date": "20260329",
+      "venue": "中山",
+      "totalInvestment": 1100,
+      "totalPayout": 0,
+      "balance": -1100,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "マーチS",
+          "date": "20260329",
+          "venue": "中山",
+          "betType": "3連複フォーメーション",
+          "investment": 1100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1100
+        }
+      ]
+    },
+    {
+      "raceName": "高松宮記念",
+      "date": "20260329",
+      "venue": "中京",
+      "totalInvestment": 5600,
+      "totalPayout": 0,
+      "balance": -5600,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "高松宮記念",
+          "date": "20260329",
+          "venue": "中京",
+          "betType": "3連単1着ながし",
+          "investment": 5600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -5600
+        }
+      ]
+    },
+    {
+      "raceName": "バイオレットS",
+      "date": "20260405",
+      "venue": "阪神",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "バイオレットS",
+          "date": "20260405",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 300,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -300
+        },
+        {
+          "raceName": "バイオレットS",
+          "date": "20260405",
+          "venue": "阪神",
+          "betType": "3連複軸2頭ながし",
+          "investment": 700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -700
+        }
+      ]
+    },
+    {
+      "raceName": "心斎橋S",
+      "date": "20260405",
+      "venue": "阪神",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "心斎橋S",
+          "date": "20260405",
+          "venue": "阪神",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "大阪杯",
+      "date": "20260405",
+      "venue": "阪神",
+      "totalInvestment": 10000,
+      "totalPayout": 0,
+      "balance": -10000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "大阪杯",
+          "date": "20260405",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 5200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -5200
+        },
+        {
+          "raceName": "大阪杯",
+          "date": "20260405",
+          "venue": "阪神",
+          "betType": "3連単1,2着ながしマルチ",
+          "investment": 4800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -4800
+        }
+      ]
+    },
+    {
+      "raceName": "天満橋S",
+      "date": "20260405",
+      "venue": "阪神",
+      "totalInvestment": 2000,
+      "totalPayout": 0,
+      "balance": -2000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "天満橋S",
+          "date": "20260405",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 1300,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1300
+        },
+        {
+          "raceName": "天満橋S",
+          "date": "20260405",
+          "venue": "阪神",
+          "betType": "3連複軸2頭ながし",
+          "investment": 700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -700
+        }
+      ]
+    },
+    {
+      "raceName": "大阪―ハンブルクC",
+      "date": "20260411",
+      "venue": "阪神",
+      "totalInvestment": 2500,
+      "totalPayout": 0,
+      "balance": -2500,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "大阪―ハンブルクC",
+          "date": "20260411",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 1300,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1300
+        },
+        {
+          "raceName": "大阪―ハンブルクC",
+          "date": "20260411",
+          "venue": "阪神",
+          "betType": "3連単BOX",
+          "investment": 1200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1200
+        }
+      ]
+    },
+    {
+      "raceName": "阪神牝馬S",
+      "date": "20260411",
+      "venue": "阪神",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "阪神牝馬S",
+          "date": "20260411",
+          "venue": "阪神",
+          "betType": "馬単",
+          "investment": 2400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2400
+        },
+        {
+          "raceName": "阪神牝馬S",
+          "date": "20260411",
+          "venue": "阪神",
+          "betType": "3連単1,2着ながし",
+          "investment": 600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -600
+        }
+      ]
+    },
+    {
+      "raceName": "ニュージーランドT",
+      "date": "20260411",
+      "venue": "中山",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "ニュージーランドT",
+          "date": "20260411",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 300,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -300
+        },
+        {
+          "raceName": "ニュージーランドT",
+          "date": "20260411",
+          "venue": "中山",
+          "betType": "3連複軸2頭ながし",
+          "investment": 900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -900
+        },
+        {
+          "raceName": "ニュージーランドT",
+          "date": "20260411",
+          "venue": "中山",
+          "betType": "3連単1,2着ながし",
+          "investment": 900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -900
+        },
+        {
+          "raceName": "ニュージーランドT",
+          "date": "20260411",
+          "venue": "中山",
+          "betType": "3連単1,3着ながし",
+          "investment": 900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -900
+        }
+      ]
+    },
+    {
+      "raceName": "桜花賞",
+      "date": "20260412",
+      "venue": "阪神",
+      "totalInvestment": 8000,
+      "totalPayout": 0,
+      "balance": -8000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "桜花賞",
+          "date": "20260412",
+          "venue": "阪神",
+          "betType": "単勝",
+          "investment": 3200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -3200
+        },
+        {
+          "raceName": "桜花賞",
+          "date": "20260412",
+          "venue": "阪神",
+          "betType": "3連単軸2頭ながしマルチ",
+          "investment": 4800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -4800
+        }
+      ]
+    },
+    {
+      "raceName": "アンタレスS",
+      "date": "20260418",
+      "venue": "阪神",
+      "totalInvestment": 2100,
+      "totalPayout": 0,
+      "balance": -2100,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "アンタレスS",
+          "date": "20260418",
+          "venue": "阪神",
+          "betType": "3連複フォーメーション",
+          "investment": 2100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2100
+        }
+      ]
+    },
+    {
+      "raceName": "利根川特別",
+      "date": "20260419",
+      "venue": "中山",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "利根川特別",
+          "date": "20260419",
+          "venue": "中山",
+          "betType": "3連複フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
+        }
+      ]
+    },
+    {
+      "raceName": "京葉S",
+      "date": "20260419",
+      "venue": "中山",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "京葉S",
+          "date": "20260419",
+          "venue": "中山",
+          "betType": "単勝",
+          "investment": 1300,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1300
+        },
+        {
+          "raceName": "京葉S",
+          "date": "20260419",
+          "venue": "中山",
+          "betType": "3連複フォーメーション",
+          "investment": 1700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1700
+        }
+      ]
+    },
+    {
+      "raceName": "福島牝馬S",
+      "date": "20260419",
+      "venue": "福島",
+      "totalInvestment": 2100,
+      "totalPayout": 0,
+      "balance": -2100,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "福島牝馬S",
+          "date": "20260419",
+          "venue": "福島",
+          "betType": "3連複軸1頭ながし",
+          "investment": 2100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2100
+        }
+      ]
+    },
+    {
+      "raceName": "皐月賞",
+      "date": "20260419",
+      "venue": "中山",
+      "totalInvestment": 6600,
+      "totalPayout": 0,
+      "balance": -6600,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "皐月賞",
+          "date": "20260419",
+          "venue": "中山",
+          "betType": "3連単1,2着ながしマルチ",
+          "investment": 6600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -6600
+        }
+      ]
+    },
+    {
+      "raceName": "サンシャインS",
+      "date": "20260419",
+      "venue": "中山",
+      "totalInvestment": 800,
+      "totalPayout": 0,
+      "balance": -800,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "サンシャインS",
+          "date": "20260419",
+          "venue": "中山",
+          "betType": "3連複軸2頭ながし",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
+        }
+      ]
+    },
+    {
+      "raceName": "青葉賞",
+      "date": "20260425",
+      "venue": "東京",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "青葉賞",
+          "date": "20260425",
+          "venue": "東京",
+          "betType": "3連単フォーメーション",
+          "investment": 3000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -3000
+        }
+      ]
+    },
+    {
+      "raceName": "マイラーズC",
+      "date": "20260426",
+      "venue": "京都",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "マイラーズC",
+          "date": "20260426",
+          "venue": "京都",
+          "betType": "3連単フォーメーション",
+          "investment": 3000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -3000
+        }
+      ]
+    },
+    {
+      "raceName": "フローラS",
+      "date": "20260426",
+      "venue": "東京",
+      "totalInvestment": 1100,
+      "totalPayout": 2290,
+      "balance": 1190,
+      "hitTypes": [
+        "3連複軸2頭ながし"
+      ],
+      "races": [
+        {
+          "raceName": "フローラS",
+          "date": "20260426",
+          "venue": "東京",
+          "betType": "3連複軸2頭ながし",
+          "investment": 1100,
+          "payout": 2290,
+          "hitStatus": "的中05―07―13／返還03",
+          "balance": 1190
+        }
+      ]
+    },
+    {
+      "raceName": "チェアマンズSP",
+      "date": "20260426",
+      "venue": "シャティン（香港）",
+      "totalInvestment": 1200,
+      "totalPayout": 2460,
+      "balance": 1260,
+      "hitTypes": [
+        "3連単1・2着ながし"
+      ],
+      "races": [
+        {
+          "raceName": "チェアマンズSP",
+          "date": "20260426",
+          "venue": "シャティン（香港）",
+          "betType": "3連単1・2着ながし",
+          "investment": 600,
+          "payout": 2460,
+          "hitStatus": "的中01→02→05",
+          "balance": 1860
+        },
+        {
+          "raceName": "チェアマンズSP",
+          "date": "20260426",
+          "venue": "シャティン（香港）",
+          "betType": "3連単1・3着ながし",
+          "investment": 600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -600
+        }
+      ]
+    },
+    {
+      "raceName": "チャンピオンズマイル",
+      "date": "20260426",
+      "venue": "シャティン（香港）",
+      "totalInvestment": 1600,
+      "totalPayout": 0,
+      "balance": -1600,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "チャンピオンズマイル",
+          "date": "20260426",
+          "venue": "シャティン（香港）",
+          "betType": "3連単フォーメーション",
+          "investment": 1600,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1600
+        }
+      ]
+    },
+    {
+      "raceName": "京王杯SC",
+      "date": "20260502",
+      "venue": "東京",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "京王杯SC",
+          "date": "20260502",
+          "venue": "東京",
+          "betType": "3連単1着ながし",
+          "investment": 3000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -3000
+        }
+      ]
+    },
+    {
+      "raceName": "ケンタッキーダービー",
+      "date": "20260503",
+      "venue": "チャーチルダウンズ（アメリカ）",
+      "totalInvestment": 6900,
+      "totalPayout": 0,
+      "balance": -6900,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "ケンタッキーダービー",
+          "date": "20260503",
+          "venue": "チャーチルダウンズ（アメリカ）",
+          "betType": "3連複フォーメーション",
+          "investment": 1900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1900
+        },
+        {
+          "raceName": "ケンタッキーダービー",
+          "date": "20260503",
+          "venue": "チャーチルダウンズ（アメリカ）",
+          "betType": "3連単フォーメーション",
+          "investment": 5000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -5000
+        }
+      ]
+    },
+    {
+      "raceName": "天皇賞春",
+      "date": "20260503",
+      "venue": "京都",
+      "totalInvestment": 6000,
+      "totalPayout": 0,
+      "balance": -6000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "天皇賞春",
+          "date": "20260503",
+          "venue": "京都",
+          "betType": "3連単1着ながし",
+          "investment": 6000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -6000
+        }
+      ]
+    },
+    {
+      "raceName": "分倍河原S",
+      "date": "20260509",
+      "venue": "東京",
+      "totalInvestment": 500,
+      "totalPayout": 0,
+      "balance": -500,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "分倍河原S",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "単勝",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        }
+      ]
+    },
+    {
+      "raceName": "青竜S",
+      "date": "20260509",
+      "venue": "東京",
+      "totalInvestment": 200,
+      "totalPayout": 0,
+      "balance": -200,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "青竜S",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "単勝",
+          "investment": 200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -200
+        }
+      ]
+    },
+    {
+      "raceName": "エプソムC",
+      "date": "20260509",
+      "venue": "東京",
+      "totalInvestment": 1700,
+      "totalPayout": 0,
+      "balance": -1700,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "エプソムC",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "3連複フォーメーション",
+          "investment": 1700,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1700
+        }
+      ]
+    },
+    {
+      "raceName": "京都新聞杯",
+      "date": "20260509",
+      "venue": "京都",
+      "totalInvestment": 200,
+      "totalPayout": 0,
+      "balance": -200,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "京都新聞杯",
+          "date": "20260509",
+          "venue": "京都",
+          "betType": "単勝",
+          "investment": 200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -200
+        }
+      ]
+    },
+    {
+      "raceName": "NHKマイルC",
+      "date": "20260510",
+      "venue": "東京",
+      "totalInvestment": 4200,
+      "totalPayout": 0,
+      "balance": -4200,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "NHKマイルC",
+          "date": "20260510",
+          "venue": "東京",
+          "betType": "3連単軸2頭ながしマルチ",
+          "investment": 4200,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -4200
+        }
+      ]
+    },
+    {
+      "raceName": "新潟大賞典",
+      "date": "20260516",
+      "venue": "新潟",
+      "totalInvestment": 3000,
+      "totalPayout": 0,
+      "balance": -3000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "新潟大賞典",
+          "date": "20260516",
+          "venue": "新潟",
+          "betType": "3連単軸2頭ながしマルチ",
+          "investment": 3000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -3000
+        }
+      ]
+    },
+    {
+      "raceName": "ヴィクトリアマイル",
+      "date": "20260517",
+      "venue": "東京",
+      "totalInvestment": 7200,
+      "totalPayout": 7340,
+      "balance": 140,
+      "hitTypes": [
+        "3連単軸2頭ながしマルチ"
+      ],
+      "races": [
+        {
+          "raceName": "ヴィクトリアマイル",
+          "date": "20260517",
+          "venue": "東京",
+          "betType": "3連単軸2頭ながしマルチ",
+          "investment": 7200,
+          "payout": 7340,
+          "hitStatus": "的中12→08→07",
+          "balance": 140
+        }
+      ]
+    },
+    {
+      "raceName": "BSイレブン賞",
+      "date": "20260517",
+      "venue": "東京",
+      "totalInvestment": 1000,
+      "totalPayout": 0,
+      "balance": -1000,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "BSイレブン賞",
+          "date": "20260517",
+          "venue": "東京",
+          "betType": "馬連",
+          "investment": 100,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -100
+        },
+        {
+          "raceName": "BSイレブン賞",
+          "date": "20260517",
+          "venue": "東京",
+          "betType": "3連複フォーメーション",
+          "investment": 900,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -900
+        }
+      ]
+    },
+    {
+      "raceName": "平安S",
+      "date": "20260523",
+      "venue": "京都",
+      "totalInvestment": 2400,
+      "totalPayout": 0,
+      "balance": -2400,
+      "hitTypes": [],
+      "races": [
+        {
+          "raceName": "平安S",
+          "date": "20260523",
+          "venue": "京都",
+          "betType": "3連単フォーメーション",
+          "investment": 2400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2400
+        }
+      ]
+    }
+  ],
+  "cumulativeData": {
+    "monthlyBalance": -34860,
+    "cumulativeBalance": -162930,
+    "totalPurchase": 183600,
+    "totalPayout": 20670,
+    "currentYearMonth": "202605",
+    "monthlyData": {
+      "202601": {
+        "purchase": 27400,
+        "payout": 8580
+      },
+      "202602": {
+        "purchase": 29200,
+        "payout": 0
+      },
+      "202603": {
+        "purchase": 28800,
+        "payout": 0
+      },
+      "202604": {
+        "purchase": 56000,
+        "payout": 4750
+      },
+      "202605": {
+        "purchase": 42200,
+        "payout": 7340
+      }
+    }
+  },
+  "articles": [
+    {
+      "id": "1771597643111",
+      "title": "テスト日記",
+      "category": "観戦日記",
+      "date": "2026.2.20",
+      "thumbnail": "assets/images/preview2.png",
+      "excerpt": "日記アップロードテスト今日は久しぶりに競馬場へ足を運んだ。冬の澄んだ空気の中、馬たちの蹄音が胸に響く。パドックで見た栗毛の馬が妙に落ち着いていて、直感でその馬を本命にした。レースが始まると歓声が一気に...",
+      "content": "<p>日記アップロードテスト</p><p>今日は久しぶりに競馬場へ足を運んだ。冬の澄んだ空気の中、馬たちの蹄音が胸に響く。パドックで見た栗毛の馬が妙に落ち着いていて、直感でその馬を本命にした。レースが始まると歓声が一気に膨らみ、馬群が目の前を駆け抜ける迫力に思わず息を呑む。結果は惜しくも二着だったけれど、勝ち負け以上に、あの瞬間の高揚感が忘れられない一日になった。</p>"
+    }
+  ],
+  "adminMessage": {
+    "text": "指定席の抽選とかプレゼントは例年より当たっていますが、ここまで過去最低成績を叩き出している。\n主な原因は雨天重馬場開催の少なさとみて、梅雨時期までは我慢。\n来週は香港競馬の観戦楽しみですね。",
+    "updatedAt": "2026/4/19"
+  },
+  "lastUpdated": "2026/5/24 0:11:06"
+}

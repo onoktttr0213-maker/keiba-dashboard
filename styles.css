@@ -1,0 +1,495 @@
+/* Custom Styles for Keiba Dashboard */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hero Animation */
+.hero-content {
+    animation: fadeInUp 1.5s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Glassmorphism Effect */
+.glass-card {
+    background: rgba(26, 26, 26, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(212, 175, 55, 0.3),
+            transparent);
+}
+
+.glass-card:hover {
+    background: rgba(26, 26, 26, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(212, 175, 55, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Bebas Neue Font Styling */
+.font-bebas {
+    letter-spacing: 0.05em;
+}
+
+
+
+/* Stat Card Hover Effects */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.stat-card:hover::before {
+    left: 100%;
+}
+
+/* Table Row Hover */
+#race-table-body tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+#race-table-body tr:hover {
+    background-color: rgba(212, 175, 55, 0.05);
+    transform: translateX(5px);
+}
+
+/* Positive/Negative Balance Colors */
+.balance-positive {
+    color: #D4AF37;
+}
+
+.balance-negative {
+    color: #ef4444;
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    border-top-color: #D4AF37;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #D4AF37;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #C0C0C0;
+}
+
+/* Section Fade In on Scroll */
+section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Number Counter Animation */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-card p:last-child {
+    animation: countUp 0.8s ease-out;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+        line-height: 1.1;
+    }
+
+    h2 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    /* Reduce padding on mobile */
+    section {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    /* Better spacing for cards */
+    .stat-card {
+        padding: 1.5rem !important;
+    }
+
+    /* Improve table readability on mobile */
+    table {
+        font-size: 0.75rem;
+    }
+
+    #race-table-body tr {
+        border-bottom: 1px solid #2a2a2a;
+    }
+
+    /* Make buttons more touch-friendly */
+    button,
+    a.inline-block {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Adjust footer layout */
+    footer .flex {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Philosophy section text */
+    #about .space-y-10 {
+        gap: 1.5rem !important;
+    }
+}
+
+/* Extra small devices (phones in portrait, less than 576px) */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    /* Even smaller padding */
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Stack grid items on very small screens */
+    .grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Reduce stat card font sizes */
+    .stat-card p:last-child {
+        font-size: 2rem !important;
+    }
+
+    /* Better table display on very small screens */
+    table th,
+    table td {
+        padding: 0.5rem 0.25rem !important;
+        font-size: 0.7rem;
+    }
+
+    /* Hide less important table columns on very small screens */
+    table th:nth-child(2),
+    table td:nth-child(2) {
+        display: none;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Remove hover effects on touch devices */
+    .stat-card:hover::before {
+        display: none;
+    }
+
+    /* Increase tap target sizes */
+    a,
+    button,
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Remove transform hover effects */
+    .hover\:scale-105:hover {
+        transform: scale(1);
+    }
+
+    .transform.hover\:scale-105:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+    .min-h-screen {
+        min-height: auto;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    #hero {
+        min-height: 100vh;
+    }
+}
+
+/* Improve scrolling performance on mobile */
+@media (max-width: 768px) {
+    * {
+        -webkit-tap-highlight-color: rgba(212, 175, 55, 0.1);
+    }
+
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Chart Container */
+#balanceChart {
+    max-height: 400px;
+}
+
+@media (max-width: 768px) {
+    #balanceChart {
+        max-height: 250px;
+    }
+}
+
+/* Gradient Text Animation */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.bg-gradient-to-r {
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+/* Venue Cards - 3-Level Hit Status Styling */
+
+/* Base venue card style */
+.venue-card {
+    background: #000000;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.venue-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+    transition: left 0.5s;
+}
+
+.venue-card:hover::before {
+    left: 100%;
+}
+
+/* Normal Hit - 通常的中 (Payout >= Investment) */
+.venue-card.hit-normal {
+    border-color: #D4AF37;
+    background: linear-gradient(135deg, #000000 0%, #1a1510 100%);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+}
+
+.venue-card.hit-normal:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.3);
+    transform: translateY(-4px);
+}
+
+/* Minor Hit - 控えめ的中 (0 < Payout < Investment) - ガミり */
+.venue-card.hit-minor {
+    border-color: #666666;
+    background: linear-gradient(135deg, #000000 0%, #0f0f0f 100%);
+    box-shadow: 0 2px 10px rgba(192, 192, 192, 0.1);
+    opacity: 0.85;
+}
+
+.venue-card.hit-minor:hover {
+    border-color: #888888;
+    box-shadow: 0 4px 15px rgba(192, 192, 192, 0.15);
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+/* No Hit - 不的中 (Payout = 0) */
+.venue-card.hit-none {
+    border-color: #1a1a1a;
+    background: #000000;
+    box-shadow: none;
+}
+
+.venue-card.hit-none:hover {
+    border-color: #2a2a2a;
+    transform: translateY(-1px);
+}
+
+/* Silver color for minor hits */
+.text-silver {
+    color: #C0C0C0;
+}
+
+/* Responsive grid for venue cards */
+#venue-cards-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Individual card entrance animation */
+.venue-card {
+    animation: cardSlideIn 0.5s ease-out backwards;
+}
+
+.venue-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.venue-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.venue-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.venue-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.venue-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.venue-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive adjustments for venue cards */
+@media (max-width: 768px) {
+    .venue-card {
+        padding: 16px;
+    }
+
+    #venue-cards-container {
+        grid-template-columns: 1fr;
+    }
+}

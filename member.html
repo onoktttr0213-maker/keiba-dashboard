@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会員ページ - Keiba Dashboard</title>
+    <meta name="description" content="会員限定コンテンツ - 競馬投資の詳細分析とデータ">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pure-black': '#000000',
+                        'dark-gray': '#1A1A1A',
+                        'champagne-gold': '#D4AF37',
+                        'silver': '#C0C0C0',
+                    },
+                    fontFamily: {
+                        'serif-jp': ['"Noto Serif JP"', 'serif'],
+                        'mono': ['"Roboto Mono"', 'monospace'],
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-pure-black text-white font-sans">
+
+    <!-- Login Section -->
+    <section id="login-section" class="min-h-screen flex items-center justify-center bg-dark-gray">
+        <div class="w-full max-w-md px-6">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif-jp font-black mb-4">
+                    <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                        会員ページ
+                    </span>
+                </h1>
+                <p class="text-gray-400">会員限定コンテンツへのアクセス</p>
+            </div>
+
+            <div class="bg-pure-black border border-gray-800 rounded-lg p-8">
+                <div class="mb-6">
+                    <label for="password-input" class="block text-sm text-gray-400 mb-2">パスワード</label>
+                    <input type="password" id="password-input" maxlength="20"
+                        class="w-full bg-dark-gray border border-gray-700 rounded-lg px-4 py-3 text-center font-mono text-2xl tracking-widest focus:border-champagne-gold focus:outline-none transition-colors"
+                        placeholder="パスワードを入力">
+                </div>
+
+                <button id="login-button"
+                    class="w-full bg-gradient-to-r from-champagne-gold to-silver text-black font-bold py-3 px-6 rounded-lg hover:scale-105 transition-transform duration-200">
+                    ログイン
+                </button>
+
+                <div id="error-message" class="mt-4 text-red-500 text-sm text-center hidden"></div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="index.html" class="text-gray-400 hover:text-champagne-gold transition-colors">
+                    ← メインページに戻る
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Member Content Section (Hidden by default) -->
+    <section id="member-content" class="min-h-screen py-12 bg-pure-black hidden">
+        <div class="container mx-auto max-w-4xl px-6">
+
+            <!-- Blogger Profile Header (note-style) -->
+            <div class="flex flex-col items-center mb-16 pb-12 border-b border-gray-900">
+                <div class="w-24 h-24 rounded-full border-2 border-champagne-gold p-1 mb-4 overflow-hidden">
+                    <img src="assets/images/profile2.png" alt="Profile"
+                        class="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-500">
+                </div>
+                <h2 class="text-2xl font-serif-jp font-bold text-white mb-2">HORSE RACING OZEKI</h2>
+                <p class="text-gray-400 text-sm text-center max-w-md leading-relaxed">
+                    データに基づいた緻密な分析と思いきや、机上の空論と蘊蓄を融合させた独自の能書きスタイルを追求しています。
+                </p>
+
+                <!-- Social / Action Links -->
+                <div class="flex gap-4 mt-6">
+                    <button id="logout-button"
+                        class="px-6 py-2 rounded-full bg-dark-gray text-gray-400 text-sm hover:text-white transition-all">ログアウト</button>
+                </div>
+            </div>
+
+            <!-- Category Navigation -->
+            <div class="flex gap-8 mb-12 overflow-x-auto pb-2 scrollbar-hide border-b border-gray-900">
+                <button
+                    class="category-tab active text-champagne-gold font-bold whitespace-nowrap border-b-2 border-champagne-gold pb-2 transition-all">ホーム</button>
+                <button
+                    class="category-tab text-gray-500 hover:text-white whitespace-nowrap pb-2 transition-all">観戦日記</button>
+                <button
+                    class="category-tab text-gray-500 hover:text-white whitespace-nowrap pb-2 transition-all">予想・分析</button>
+                <button
+                    class="category-tab text-gray-500 hover:text-white whitespace-nowrap pb-2 transition-all">データアーカイブ</button>
+            </div>
+
+            <!-- Blog Feed -->
+            <div id="article-feed" class="space-y-20">
+                <!-- Articles will be loaded dynamically here -->
+            </div>
+
+            <!-- More Button -->
+            <div class="mt-20 text-center">
+                <button
+                    class="px-12 py-3 rounded-full border border-gray-800 text-gray-400 hover:text-white hover:border-white transition-all duration-300">
+                    もっと見る
+                </button>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="mt-32 text-center pt-12 border-t border-gray-900">
+                <a href="index.html" class="text-gray-500 hover:text-champagne-gold transition-colors">
+                    ← メインページに戻る
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="member.js"></script>
+</body>
+
+</html>

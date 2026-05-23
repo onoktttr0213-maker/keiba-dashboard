@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロフィール - ケイバオゼキ</title>
+    <meta name="description" content="ケイバオゼキのプロフィールページ - 競馬投資家としての経歴と実績">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pure-black': '#000000',
+                        'dark-gray': '#1A1A1A',
+                        'champagne-gold': '#D4AF37',
+                        'silver': '#C0C0C0',
+                    },
+                    fontFamily: {
+                        'serif-jp': ['"Noto Serif JP"', 'serif'],
+                        'mono': ['"Roboto Mono"', 'monospace'],
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-pure-black text-white font-sans">
+
+    <!-- Hero Section with Profile Photo -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden visible">
+        <div class="absolute inset-0 bg-gradient-to-br from-pure-black via-dark-gray to-pure-black opacity-90"></div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="hero-content opacity-0 translate-y-10 transition-all duration-1000">
+                <!-- Profile Photo Placeholder -->
+                <div class="mb-8 flex justify-center">
+                    <div
+                        class="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-champagne-gold overflow-hidden bg-dark-gray flex items-center justify-center">
+                        <img id="profile-photo" src="" alt="プロフィール写真" class="w-full h-full object-cover hidden">
+                        <svg class="w-24 h-24 text-champagne-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl lg:text-9xl font-serif-jp font-black mb-6 tracking-tight">
+                    <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                        ケイバオゼキ
+                    </span>
+                </h1>
+                <p class="text-xl md:text-3xl font-light tracking-widest mb-12 text-gray-300">
+                    - Professional Keiba Investor -
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-champagne-gold to-silver mx-auto"></div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-8 h-8 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="min-h-screen py-20 bg-dark-gray flex items-center visible">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-5xl lg:text-7xl font-serif-jp font-bold mb-8 md:mb-12 text-center">
+                    <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                        Profile
+                    </span>
+                </h2>
+
+                <div class="space-y-8 text-lg leading-relaxed text-gray-300">
+                    <!-- Placeholder for Title -->
+                    <div class="bg-pure-black border border-gray-800 p-6 rounded-lg">
+                        <h3 class="text-xl md:text-2xl font-serif-jp font-bold text-champagne-gold mb-4">紹介</h3>
+                        <p class="text-gray-400 italic">
+                            プロフェッショナル馬券師 / 競馬データアナリスト
+                        <p>
+                            東京と大阪を拠点に、現地観戦や毎夏の北海道遠征を楽しむ流浪の馬券師。
+                        </p>
+                    </div>
+
+                    <!-- Placeholder for Bio -->
+                    <div class="bg-pure-black border border-gray-800 p-6 rounded-lg">
+                        <h3 class="text-xl md:text-2xl font-serif-jp font-bold text-champagne-gold mb-4">自己紹介</h3>
+
+                        <div class="space-y-3 text-gray-300">
+                            <p><span class="text-champagne-gold font-bold">競馬歴：</span>6年目</p>
+                            <p><span class="text-champagne-gold font-bold">好きな馬：</span>ジャックドール</p>
+                            <p><span class="text-champagne-gold font-bold">好きな騎手：</span>川田、菅原明良、Cデムーロ</p>
+                            <p><span class="text-champagne-gold font-bold">苦手な騎手：</span>ルメール、松山、レーン</p>
+                            <p><span class="text-champagne-gold font-bold">好きな競馬場：</span>東京、函館、（大井、帯広）</p>
+                            <p><span class="text-champagne-gold font-bold">好きなトレセン（調教）：</span>栗東（坂路コース）</p>
+                            <p><span class="text-champagne-gold font-bold">好きな距離：</span>1600m、1400m、2000m</p>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-gray-800 space-y-4 text-gray-300">
+                            <p>
+                                <span class="text-champagne-gold font-bold">世代：</span>
+                                エアシャカールやアグネスデジタルと同級生
+                            </p>
+
+                            <p>
+                                <span class="text-champagne-gold font-bold">競馬歴：</span>
+                                2021年春G1から本格始動。重賞を中心に参戦。
+                            </p>
+
+                            <p>
+                                2024年にJRA全10場訪問制覇。コントレイルのラストランやリバティアイランドの牝馬三冠なども現地観戦するなど遠征も欠かさない。
+                            </p>
+
+                            <p>
+                                <span class="text-champagne-gold font-bold">得意条件：</span>
+                                芝の重・不良馬場、海外競馬（非国民馬券）
+                            </p>
+
+                            <p>
+                                <span class="text-champagne-gold font-bold">馬券戦略：</span>
+                                人気馬から単勝と三連系馬券を中心に組み立てる。調教、パドック、タイム、コース適正が予想の中心ファクター
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="min-h-screen py-20 bg-pure-black visible">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-serif-jp font-bold mb-16 text-center">
+                <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                    過去の実績
+                </span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Achievement Card 1 -->
+                <div
+                    class="bg-dark-gray border border-gray-800 p-8 rounded-lg hover:border-champagne-gold transition-all duration-300 transform hover:scale-105">
+                    <div class="text-champagne-gold text-4xl font-mono font-bold mb-4">2023</div>
+                    <h3 class="text-lg md:text-xl font-serif-jp font-bold mb-3 text-silver">的中G1レース</h3>
+                    <ul class="text-gray-400 mb-4 space-y-1 list-disc list-inside">
+                        <li>桜花賞</li>
+                        <li>皐月賞</li>
+                        <li>オークス</li>
+                        <li>宝塚記念</li>
+                        <li>スプリンターズS</li>
+                    </ul>
+                </div>
+
+                <!-- Achievement Card 2 -->
+                <div
+                    class="bg-dark-gray border border-gray-800 p-8 rounded-lg hover:border-champagne-gold transition-all duration-300 transform hover:scale-105">
+                    <div class="text-champagne-gold text-4xl font-mono font-bold mb-4">2024</div>
+                    <h3 class="text-xl font-serif-jp font-bold mb-3 text-silver">的中G1レース</h3>
+                    <ul class="text-gray-400 mb-4 space-y-1 list-disc list-inside">
+                        <li>宝塚記念</li>
+                        <li>ジャパンC</li>
+                        <li>チャンピオンズC</li>
+                        <li>朝日杯FS</li>
+                    </ul>
+                </div>
+
+                <!-- Achievement Card 3 -->
+                <div
+                    class="bg-dark-gray border border-gray-800 p-8 rounded-lg hover:border-champagne-gold transition-all duration-300 transform hover:scale-105">
+                    <div class="text-champagne-gold text-4xl font-mono font-bold mb-4">2025</div>
+                    <h3 class="text-xl font-serif-jp font-bold mb-3 text-silver">的中G1レース</h3>
+                    <ul class="text-gray-400 mb-4 space-y-1 list-disc list-inside">
+                        <li>エリザベス女王杯</li>
+                        <li>チャンピオンズC</li>
+                        <li>有馬記念</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-pure-black py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center gap-8 mb-6">
+                <a href="index.html" class="text-champagne-gold hover:text-silver transition-colors font-bold">
+                    ← メインページに戻る
+                </a>
+                <a href="member.html" class="text-gray-400 hover:text-champagne-gold transition-colors">
+                    会員ページ
+                </a>
+                <a href="contact.html" class="text-gray-400 hover:text-champagne-gold transition-colors">
+                    お問合せ
+                </a>
+                <a href="admin.html" class="text-gray-400 hover:text-champagne-gold transition-colors">
+                    管理者ページ
+                </a>
+            </div>
+            <p class="text-gray-500 text-sm tracking-widest">
+                © 2026 Personal Profile & Keiba Dashboard. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Hero animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroContent = document.querySelector('.hero-content');
+            setTimeout(() => {
+                heroContent.style.opacity = '1';
+                heroContent.style.transform = 'translateY(0)';
+            }, 300);
+
+            // Profile photo handler
+            const profilePhoto = document.getElementById('profile-photo');
+            if (profilePhoto) {
+                profilePhoto.src = 'assets/images/profile2.png';
+                profilePhoto.classList.remove('hidden');
+                // Hide SVG placeholder if it exists
+                const svgPlaceholder = profilePhoto.nextElementSibling;
+                if (svgPlaceholder) {
+                    svgPlaceholder.classList.add('hidden');
+                }
+            }
+
+            // QR code handler - Load from LocalStorage
+            const qrCodeImage = document.getElementById('qr-code-image');
+            const qrCodeData = localStorage.getItem('keibaQRCodeImage');
+
+            if (qrCodeData) {
+                qrCodeImage.src = qrCodeData;
+                qrCodeImage.classList.remove('hidden');
+                const placeholder = qrCodeImage.parentElement.querySelector('div');
+                if (placeholder) {
+                    placeholder.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

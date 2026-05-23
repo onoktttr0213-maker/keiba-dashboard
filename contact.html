@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問合せ - Keiba Dashboard</title>
+    <meta name="description" content="お問合せフォーム - ご質問やご要望をお聞かせください">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pure-black': '#000000',
+                        'dark-gray': '#1A1A1A',
+                        'champagne-gold': '#D4AF37',
+                        'silver': '#C0C0C0',
+                    },
+                    fontFamily: {
+                        'serif-jp': ['"Noto Serif JP"', 'serif'],
+                        'mono': ['"Roboto Mono"', 'monospace'],
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-pure-black text-white font-sans">
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden bg-dark-gray">
+        <div class="absolute inset-0 bg-gradient-to-br from-pure-black via-dark-gray to-pure-black opacity-90"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <!-- Header -->
+                <div class="text-center mb-12">
+                    <h1 class="text-3xl md:text-5xl lg:text-7xl font-serif-jp font-black mb-4 md:mb-6">
+                        <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                            お問合せ
+                        </span>
+                    </h1>
+                    <p class="text-base md:text-lg lg:text-xl text-gray-300">
+                        一緒に競馬観戦がしたいなどのご要望がございましたら、お気軽にお問合せください
+                    </p>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-pure-black border border-gray-800 rounded-lg p-8">
+                    <form id="contact-form">
+                        <!-- Name Field -->
+                        <div class="mb-6">
+                            <label for="name" class="block text-sm text-gray-400 mb-2">お名前 <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" required
+                                class="w-full bg-dark-gray border border-gray-700 rounded-lg px-4 py-3 focus:border-champagne-gold focus:outline-none transition-colors"
+                                placeholder="山田 太郎">
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-6">
+                            <label for="email" class="block text-sm text-gray-400 mb-2">メールアドレス <span
+                                    class="text-red-500">*</span></label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full bg-dark-gray border border-gray-700 rounded-lg px-4 py-3 focus:border-champagne-gold focus:outline-none transition-colors"
+                                placeholder="example@email.com">
+                        </div>
+
+                        <!-- Subject Field -->
+                        <div class="mb-6">
+                            <label for="subject" class="block text-sm text-gray-400 mb-2">件名 <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="subject" name="subject" required
+                                class="w-full bg-dark-gray border border-gray-700 rounded-lg px-4 py-3 focus:border-champagne-gold focus:outline-none transition-colors"
+                                placeholder="お問合せの件名">
+                        </div>
+
+                        <!-- Message Field -->
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm text-gray-400 mb-2">メッセージ <span
+                                    class="text-red-500">*</span></label>
+                            <textarea id="message" name="message" rows="6" required
+                                class="w-full bg-dark-gray border border-gray-700 rounded-lg px-4 py-3 focus:border-champagne-gold focus:outline-none transition-colors resize-none"
+                                placeholder="お問合せ内容をご記入ください"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-champagne-gold to-silver text-black font-bold py-3 px-6 rounded-lg hover:scale-105 transition-transform duration-200">
+                            送信する
+                        </button>
+
+                        <!-- Status Message -->
+                        <div id="form-status" class="mt-4 text-sm text-center hidden"></div>
+                    </form>
+                </div>
+
+                <!-- Back Link -->
+                <div class="mt-8 text-center">
+                    <a href="index.html" class="text-gray-400 hover:text-champagne-gold transition-colors">
+                        ← メインページに戻る
+                    </a>
+                </div>
+
+                <!-- Note -->
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-500">
+                        ※送信ボタンをクリックすると、メールアプリが起動します
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="contact.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HORSE RACING OZEKI Personal Profile & Keiba Dashboard </title>
+    <meta name="description" content="プロフェッショナルな競馬投資記録 - 研ぎ澄まされた戦績を公開">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Inter:wght@300;400;600;700&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pure-black': '#000000',
+                        'dark-gray': '#1A1A1A',
+                        'champagne-gold': '#D4AF37',
+                        'silver': '#C0C0C0',
+                    },
+                    fontFamily: {
+                        'serif-jp': ['"Noto Serif JP"', 'serif'],
+                        'mono': ['"Roboto Mono"', 'monospace'],
+                        'sans': ['Inter', 'sans-serif'],
+                        'bebas': ['"Bebas Neue"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-pure-black text-white font-sans">
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-pure-black via-dark-gray to-pure-black opacity-90"></div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="hero-content opacity-0 translate-y-10 transition-all duration-1000">
+                <h1 class="text-5xl md:text-7xl lg:text-9xl font-serif-jp font-black mb-6 tracking-tight">
+                    <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                        馬券師の記録
+                    </span>
+                </h1>
+                <p class="text-lg md:text-2xl lg:text-3xl font-light tracking-widest mb-12 text-gray-300">
+                    - Professional Keiba Investment -
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-champagne-gold to-silver mx-auto"></div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-8 h-8 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Admin Message Section -->
+    <section id="admin-message-section" class="py-12 bg-pure-black hidden">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto">
+                <div class="relative bg-dark-gray border border-champagne-gold/30 rounded-2xl p-8 overflow-hidden">
+                    <!-- Decorative glow -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-champagne-gold/5 via-transparent to-transparent pointer-events-none">
+                    </div>
+
+                    <!-- Header -->
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-1 h-8 bg-gradient-to-b from-champagne-gold to-silver rounded-full"></div>
+                        <h2 class="text-lg md:text-xl font-serif-jp font-bold tracking-widest text-champagne-gold">
+                            管理人からの一言
+                        </h2>
+                    </div>
+
+                    <!-- Message body -->
+                    <p id="admin-message-text"
+                        class="text-gray-200 font-serif-jp leading-loose text-base md:text-lg whitespace-pre-line pl-4">
+                    </p>
+
+                    <!-- Updated date -->
+                    <p id="admin-message-date" class="mt-5 text-xs text-gray-600 text-right tracking-widest"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Dashboard -->
+    <section id="stats" class="min-h-screen py-20 bg-dark-gray relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-dark-gray via-pure-black to-dark-gray opacity-50"></div>
+        <div class="absolute inset-0 bg-gradient-radial from-champagne-gold/5 via-transparent to-transparent"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-3xl md:text-5xl lg:text-7xl font-serif-jp font-bold mb-12 md:mb-16 text-center">
+                <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                    SCORE ～戦績～ </span>
+            </h2>
+
+            <!-- Balance Summary Section -->
+            <div class="mb-16">
+                <h3 class="text-2xl md:text-3xl font-serif-jp font-bold mb-6 md:mb-8 text-champagne-gold text-center">
+                    収支サマリー</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Weekend Balance -->
+                    <div class="glass-card p-6 rounded-xl hover:border-champagne-gold transition-all duration-300">
+                        <p class="text-gray-400 text-sm tracking-widest mb-2">直近の収支</p>
+                        <p class="text-3xl md:text-4xl lg:text-5xl font-bebas font-bold" id="weekend-balance">--</p>
+                        <p class="text-xs text-gray-500 mt-2" id="weekend-period">--</p>
+                    </div>
+
+                    <!-- Monthly Balance -->
+                    <div class="glass-card p-6 rounded-xl hover:border-champagne-gold transition-all duration-300">
+                        <p class="text-gray-400 text-sm tracking-widest mb-2">単月収支</p>
+                        <p class="text-3xl md:text-4xl lg:text-5xl font-bebas font-bold" id="monthly-balance">--</p>
+                        <p class="text-xs text-gray-500 mt-2" id="monthly-period">--</p>
+                    </div>
+
+                    <!-- Cumulative Balance -->
+                    <div class="glass-card p-6 rounded-xl hover:border-champagne-gold transition-all duration-300">
+                        <p class="text-gray-400 text-sm tracking-widest mb-2">累月収支</p>
+                        <p class="text-3xl md:text-4xl lg:text-5xl font-bebas font-bold" id="cumulative-balance">--
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">全期間</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <div
+                    class="stat-card glass-card p-8 rounded-xl hover:border-champagne-gold transition-all duration-300 transform hover:scale-105">
+                    <p class="text-gray-400 text-sm tracking-widest mb-2">TOTAL ROI</p>
+                    <p class="text-4xl md:text-5xl lg:text-6xl font-bebas font-bold text-champagne-gold" id="total-roi">
+                        --%</p>
+                </div>
+
+                <div
+                    class="stat-card glass-card p-8 rounded-xl hover:border-champagne-gold transition-all duration-300 transform hover:scale-105">
+                    <p class="text-gray-400 text-sm tracking-widest mb-2">TOTAL BALANCE</p>
+                    <p class="text-4xl md:text-5xl lg:text-6xl font-bebas font-bold" id="total-balance">--</p>
+                </div>
+
+                <div
+                    class="stat-card glass-card p-8 rounded-xl hover:border-champagne-gold transition-all duration-300 transform hover:scale-105">
+                    <p class="text-gray-400 text-sm tracking-widest mb-2">WIN RATE</p>
+                    <p class="text-4xl md:text-5xl lg:text-6xl font-bebas font-bold text-silver" id="win-rate">--%
+                    </p>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="bg-pure-black border border-gray-800 p-8 rounded-lg mb-20">
+                <h3 class="text-xl md:text-2xl font-serif-jp font-bold mb-4 md:mb-6 text-champagne-gold">収支推移</h3>
+                <canvas id="balanceChart" class="w-full" height="100"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Race History Table -->
+    <section id="history" class="min-h-screen py-20 bg-pure-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl lg:text-7xl font-serif-jp font-bold mb-8 md:mb-12 text-center">
+                <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                    レース履歴
+                </span>
+            </h2>
+
+            <!-- Filter Checkbox -->
+            <div class="mb-6 flex justify-end">
+                <label
+                    class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer hover:text-champagne-gold transition-colors">
+                    <input type="checkbox" id="filter-winning-only"
+                        class="w-4 h-4 rounded border-gray-600 bg-dark-gray text-champagne-gold focus:ring-champagne-gold focus:ring-offset-0 cursor-pointer">
+                    <span>的中実績のみ表示</span>
+                </label>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-800">
+                            <th
+                                class="text-left py-3 px-2 md:py-4 md:px-4 text-gray-400 font-mono text-xs md:text-sm tracking-wider">
+                                日付</th>
+                            <th
+                                class="text-left py-3 px-2 md:py-4 md:px-4 text-gray-400 font-mono text-xs md:text-sm tracking-wider">
+                                レース名</th>
+                            <th
+                                class="text-right py-3 px-2 md:py-4 md:px-4 text-gray-400 font-mono text-xs md:text-sm tracking-wider">
+                                投資額</th>
+                            <th
+                                class="text-right py-3 px-2 md:py-4 md:px-4 text-gray-400 font-mono text-xs md:text-sm tracking-wider">
+                                払戻金</th>
+                            <th
+                                class="text-right py-3 px-2 md:py-4 md:px-4 text-gray-400 font-mono text-xs md:text-sm tracking-wider">
+                                収支</th>
+                            <th
+                                class="text-right py-3 px-2 md:py-4 md:px-4 text-gray-400 font-mono text-xs md:text-sm tracking-wider">
+                                回収率</th>
+                        </tr>
+                    </thead>
+                    <tbody id="race-table-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8 text-left text-gray-300 text-sm md:text-base font-serif-jp leading-relaxed">
+                <p>対象は中央競馬の特別競走および重賞レース購入分です。<br>国内馬券発売のある海外重賞も含みます。</p>
+                <p class="text-xs md:text-sm mt-2 text-gray-500">（中央競馬の平場や地方交流重賞などは対象外としています。）</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <!-- Profile & Philosophy Section -->
+    <section id="about" class="min-h-screen flex flex-col md:flex-row">
+        <!-- Left: Profile Link -->
+        <a href="profile.html"
+            class="group relative w-full md:w-1/2 min-h-[50vh] md:min-h-screen block overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0">
+                <img src="assets/images/profile.jpg" alt="Profile"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
+            </div>
+
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-all duration-300"></div>
+
+            <!-- Text Content -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <h2
+                    class="text-6xl md:text-8xl font-serif-jp font-bold tracking-widest text-white relative z-10 transition-transform duration-500 group-hover:-translate-y-2">
+                    PROFILE
+                    <span
+                        class="block text-lg md:text-xl font-sans font-normal tracking-[0.5em] text-white mt-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100 text-center">
+                        プロフィールを見る
+                    </span>
+                </h2>
+            </div>
+        </a>
+
+        <!-- Right: Philosophy -->
+        <div class="w-full md:w-1/2 bg-dark-gray flex items-center justify-center p-12 md:p-24">
+            <div class="max-w-xl">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif-jp font-bold mb-8 md:mb-12 text-left">
+                    <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                        Philosophy
+                    </span>
+                </h2>
+
+                <div class="space-y-10 text-lg leading-loose text-gray-300 font-serif-jp">
+                    <p class="text-lg md:text-xl lg:text-2xl border-l-4 border-champagne-gold pl-4 md:pl-6">
+                        競馬は、単なるギャンブルではない。<br>
+                        研ぎ澄まされた分析と、<br>
+                        冷静な判断の積み重ねだ。
+                    </p>
+
+                    <p>
+                        馬を見て、データを読み解き、レース毎の答えを導き出す。<br>
+                        プロフェッショナルとして、戦略的勝利を収めるまで戦い続ける。
+                    </p>
+
+                    <p class="text-champagne-gold font-bold text-xl">
+                        「週末」は、勝負の時間。<br>
+                        &nbsp;&nbsp;&nbsp;たくさんの時間とお金を、レースに捧ぐ。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section with QR Code and URL -->
+    <section id="contact" class="min-h-screen py-20 bg-dark-gray flex items-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl lg:text-7xl font-serif-jp font-bold mb-12 md:mb-16 text-center">
+                <span class="bg-gradient-to-r from-champagne-gold to-silver bg-clip-text text-transparent">
+                    支援のご案内
+                </span>
+            </h2>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- QR Code Area -->
+                    <div class="bg-pure-black border border-gray-800 p-8 rounded-lg text-center">
+                        <h3 class="text-xl md:text-2xl font-serif-jp font-bold text-champagne-gold mb-4 md:mb-6">QRコード
+                        </h3>
+                        <div class="flex justify-center mb-4">
+                            <div id="qr-code-container"
+                                class="w-48 h-48 md:w-64 md:h-64 bg-white rounded-lg flex items-center justify-center">
+                                <img id="qr-code-image" src="" alt="PayPay QRコード"
+                                    class="w-full h-full object-contain hidden">
+                                <div class="text-gray-400 text-sm p-4">
+                                    ※QRコード画像をここに配置してください
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            QRコードをスキャンして送金しよう
+                        </p>
+                    </div>
+
+                    <!-- URL Display Area -->
+                    <div class="bg-pure-black border border-gray-800 p-8 rounded-lg">
+                        <h3 class="text-xl md:text-2xl font-serif-jp font-bold text-champagne-gold mb-4 md:mb-6">URL
+                        </h3>
+                        <div class="space-y-4">
+                            <!-- Website URL -->
+                            <div class="border border-gray-700 rounded-lg p-4 bg-dark-gray">
+                                <p class="text-xs md:text-sm text-gray-500 mb-2">PayPay送金で応援できます</p>
+                                <a href="https://qr.paypay.ne.jp/p2p01_R1WVFQXACisyUwfc" id="website-url"
+                                    class="text-champagne-gold hover:text-silver transition-colors break-all text-xs md:text-sm">
+                                    https://qr.paypay.ne.jp/p2p01_R1WVFQXACisyUwfc
+                                </a>
+                            </div>
+
+                            <!-- Twitter/X URL -->
+                            <div class="border border-gray-700 rounded-lg p-4 bg-dark-gray">
+                                <p class="text-xs text-gray-500 mb-2">欲しいものリスト</p>
+                                <a href="https://www.amazon.jp/hz/wishlist/ls/2AFOMY8CXTJ7U?ref_=wl_share"
+                                    id="twitter-url"
+                                    class="text-champagne-gold hover:text-silver transition-colors break-all">
+                                    https://www.amazon.jp/hz/wishlist/ls/2AFOMY8CXTJ7U?ref_=wl_share
+                                </a>
+                            </div>
+
+                            <!-- Additional URL -->
+                            <div class="border border-gray-700 rounded-lg p-4 bg-dark-gray">
+                                <p class="text-xs text-gray-500 mb-2">非公式ラインスタンプ販売中</p>
+                                <a href="https://line.me/S/sticker/30785134/?lang=ja&utm_source=gnsh_stickerDetail"
+                                    id="other-url"
+                                    class="text-champagne-gold hover:text-silver transition-colors break-all">
+                                    https://line.me/S/sticker/30785134/?lang=ja&utm_source=gnsh_stickerDetail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Note about editing -->
+                <div class="mt-8 text-center">
+                    <p class="text-gray-500 text-base">
+                        皆様の温かいご支援をお待ちしております。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-pure-black py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex gap-6">
+                    <a href="member.html" class="text-champagne-gold hover:text-silver transition-colors font-bold">
+                        会員ページ
+                    </a>
+                    <a href="contact.html" class="text-champagne-gold hover:text-silver transition-colors font-bold">
+                        お問合せ
+                    </a>
+                </div>
+
+                <p class="text-gray-500 text-sm tracking-widest">
+                    © 2026 Personal Profile & Keiba Dashboard. All rights reserved.
+                </p>
+
+                <a href="admin.html"
+                    class="bg-dark-gray border border-gray-800 text-gray-300 font-bold py-2 px-4 rounded-lg hover:border-champagne-gold hover:text-champagne-gold transition-all duration-300 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    管理者ページ
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // QR code handler - Load from LocalStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const qrCodeImage = document.getElementById('qr-code-image');
+            const qrCodeData = localStorage.getItem('keibaQRCodeImage');
+
+            if (qrCodeData && qrCodeImage) {
+                qrCodeImage.src = qrCodeData;
+                qrCodeImage.classList.remove('hidden');
+                const placeholder = qrCodeImage.parentElement.querySelector('div');
+                if (placeholder) {
+                    placeholder.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
