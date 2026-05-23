@@ -531,6 +531,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const hero = document.getElementById('hero');
     if (hero) hero.classList.add('visible');
 
+    // キャッシュ対策としてQRコード画像にタイムスタンプを付与
+    const qrImage = document.getElementById('qr-code-image');
+    if (qrImage) {
+        qrImage.src = `images/qr.png?t=${Date.now()}`;
+    }
+
     const filterCheckbox = document.getElementById('filter-winning-only');
     if (filterCheckbox) {
         filterCheckbox.addEventListener('change', (e) => {
