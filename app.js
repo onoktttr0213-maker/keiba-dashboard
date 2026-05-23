@@ -1,48 +1,41 @@
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxtW17OBpLXwSHcQSToIE6DnD1pS8mtVh1B5yHomfw86Ceh7k_tLFxxst9aFq9c3G5d/exec';
+
 let raceData = [];
 let venueData = [];
 let chart = null;
 
-// Parse investment amount (handle "/" format)
+// Parse investment amount
 function parseInvestmentAmount(value) {
     if (!value) return 0;
     const str = value.toString().trim();
-
-    // Handle "100／900" or "100/900" format - take the right side
     if (str.includes('／') || str.includes('/')) {
         const parts = str.split(/[／\/]/);
         return parseInt(parts[1].trim()) || 0;
     }
-
     return parseInt(str) || 0;
 }
 
-// Parse detailed CSV format (累月.csv)
-function parseDetailedCSV(csvText) {
-    const lines = csvText.trim().split('\n');
-    if (lines.length === 0) return [];
+// Parse GAS Results into detailed format
+function parseGasResults(rows) {
+    if (!rows || rows.length <= 1) return [];
 
     const data = [];
-
-    // Skip header row, process data rows
-    for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-
-        const values = line.split(',');
-
-        // Skip if not enough columns
+    for (let i = 1; i < rows.length; i++) {
+        const values = rows[i];
         if (values.length < 20) continue;
 
-        const raceName = values[0]?.trim(); // A列: レース名
-        const date = values[8]?.trim();      // I列: 日付
-        const venue = values[11]?.trim();    // L列: 場名
+        const raceName = values[0]?.toString().trim();
+        let date = values[8]?.toString().trim().replace(/[\/\-]/g, '');
+        const venue = values[11]?.toString().trim();
 
-        // Exclude rows without race name or date
         if (!raceName || !date) continue;
 
-        const investment = parseInt(values[5]?.trim()) || 0;  // F列: 購入金額
-        const payout = parseInt(values[19]?.trim()) || 0;     // T列: 払戻金額
-        const betType = values[14]?.trim() || '';             // O列: 式別
+        const investmentStr = values[5]?.toString().trim().replace(/["'¥,\+]/g, '');
+        const payoutStr = values[19]?.toString().trim().replace(/["'¥,\+]/g, '');
+
+        const investment = parseInt(investmentStr) || 0;
+        const payout = parseInt(payoutStr) || 0;
+        const betType = values[14]?.toString().trim() || '';             
 
         data.push({
             raceName: raceName,
@@ -51,20 +44,18 @@ function parseDetailedCSV(csvText) {
             betType: betType,
             investment: investment,
             payout: payout,
-            hitStatus: values[17]?.trim() || '',  // R列: 的中/返還
+            hitStatus: values[17]?.toString().trim() || '',  
+            balance: payout - investment
         });
     }
-
     return data;
 }
 
 // Group data by race name
 function groupByRaceName(data) {
     const grouped = {};
-
     data.forEach(row => {
         const key = row.raceName;
-
         if (!grouped[key]) {
             grouped[key] = {
                 raceName: row.raceName,
@@ -77,18 +68,14 @@ function groupByRaceName(data) {
                 races: []
             };
         }
-
         grouped[key].totalInvestment += row.investment;
         grouped[key].totalPayout += row.payout;
         grouped[key].races.push(row);
-
-        // Track hit types (only if payout > 0)
         if (row.payout > 0 && row.betType && !grouped[key].hitTypes.includes(row.betType)) {
             grouped[key].hitTypes.push(row.betType);
         }
     });
 
-    // Calculate balance for each race
     Object.values(grouped).forEach(race => {
         race.balance = race.totalPayout - race.totalInvestment;
     });
@@ -96,269 +83,135 @@ function groupByRaceName(data) {
     return Object.values(grouped);
 }
 
-// Calculate hit status (3 levels)
+// Calculate hit status
 function calculateHitStatus(payout, investment) {
-    if (payout === 0) {
-        return 'none'; // 不的中
-    } else if (payout >= investment) {
-        return 'normal'; // 通常的中
-    } else {
-        return 'minor'; // 控えめ的中 (ガミり)
-    }
+    if (payout === 0) return 'none';
+    if (payout >= investment) return 'normal';
+    return 'minor';
 }
 
-// Load CSV Data
-async function loadCSVData() {
-    try {
-        // PRIORITY 1: Load static JSON database (shared across all devices)
-        // Add cache-busting timestamp to ensure fresh data
-        let dbLoaded = false;
+// Parse Cumulative from GAS
+function parseCumulativeFromGas(rows) {
+    if (!rows || rows.length <= 1) return null;
 
-        try {
-            const cacheBuster = Date.now();
-            const response = await fetch(`public_test/data/db.json?t=${cacheBuster}`);
-            if (response.ok) {
-                const db = await response.json();
-                if (db.venueData && db.venueData.length > 0) {
-                    venueData = db.venueData;
-                    updateLastModified(db.lastUpdated || 'Public Data');
-                    dbLoaded = true;
-                    console.log('✓ Loaded data from db.json (latest)');
-                }
+    let totalPurchase = 0;
+    let totalPayout = 0;
+    const monthlyData = new Map();
+
+    const now = new Date();
+    const currentYearMonth = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}`;
+    
+    let latestDate = '';
+    let latestDatePurchase = 0;
+    let latestDatePayout = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+        const cols = rows[i];
+        if (cols.length < 20) continue;
+
+        let dateStr = cols[8]?.toString().trim().replace(/[\/\-]/g, '');
+        const purchaseStr = cols[5]?.toString().trim().replace(/["'¥,\+]/g, '');
+        const payoutStr = cols[19]?.toString().trim().replace(/["'¥,\+]/g, '');
+
+        const purchase = parseInt(purchaseStr) || 0;
+        const payout = parseInt(payoutStr) || 0;
+
+        totalPurchase += purchase;
+        totalPayout += payout;
+
+        if (dateStr && dateStr.length === 8) {
+            const yearMonth = dateStr.substring(0, 6);
+            if (!monthlyData.has(yearMonth)) {
+                monthlyData.set(yearMonth, { purchase: 0, payout: 0 });
             }
-        } catch (error) {
-            console.warn('db.json load failed, trying localStorage:', error);
-        }
-
-        // PRIORITY 2: Fall back to localStorage if db.json failed
-        if (!dbLoaded) {
-            const savedData = localStorage.getItem('keibaRaceData');
-            const lastUpdated = localStorage.getItem('keibaLastUpdated');
-
-            if (savedData) {
-                const parsedData = JSON.parse(savedData);
-
-                // Check if it's detailed format or simple format
-                if (parsedData.length > 0 && parsedData[0].venue) {
-                    // Detailed format (already grouped)
-                    venueData = parsedData;
-                    updateLastModified(lastUpdated || 'LocalStorage Data');
-                    console.log('✓ Loaded data from localStorage (fallback)');
-                } else {
-                    // Simple format (old results.csv)
-                    raceData = parsedData;
-                    updateLastModified(lastUpdated || 'LocalStorage Data');
-                    console.log('✓ Loaded data from localStorage (fallback)');
-                }
-            } else {
-                // PRIORITY 3: Final fallback to legacy CSV
-                try {
-                    const response = await fetch('public_test/data/累月.csv');
-                    const csvText = await response.text();
-                    const rawData = parseDetailedCSV(csvText);
-                    venueData = groupByRaceName(rawData);
-                    updateLastModified('デフォルトデータ (累月)');
-                    console.log('✓ Loaded data from 累月.csv (final fallback)');
-                } catch (csvError) {
-                    console.error('累月.csv読み込みエラー:', csvError);
-                }
+            const data = monthlyData.get(yearMonth);
+            data.purchase += purchase;
+            data.payout += payout;
+            
+            if (dateStr > latestDate) {
+                latestDate = dateStr;
+                latestDatePurchase = purchase;
+                latestDatePayout = payout;
+            } else if (dateStr === latestDate) {
+                latestDatePurchase += purchase;
+                latestDatePayout += payout;
             }
         }
-
-        updateDashboard();
-        renderVenueCards();
-        renderChart();
-
-    } catch (error) {
-        console.error('Data loading error:', error);
-        showError();
-    }
-}
-
-// Parse Balance CSV
-function parseBalanceCSV(csvText) {
-    const lines = csvText.trim().split('\n');
-    if (lines.length < 2) return [];
-
-    const data = [];
-
-    // Skip header row, process data rows
-    for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue;
-
-        const values = line.split(',');
-        if (values.length < 4) continue;
-
-        data.push({
-            period: values[0]?.trim() || '',
-            weekendBalance: parseInt(values[1]?.replace(/[+¥,]/g, '')) || 0,
-            monthlyBalance: parseInt(values[2]?.replace(/[+¥,]/g, '')) || 0,
-            cumulativeBalance: parseInt(values[3]?.replace(/[+¥,]/g, '')) || 0
-        });
     }
 
-    return data;
-}
+    let monthlyBalance = 0;
+    let displayYearMonth = currentYearMonth;
 
-// Load Balance Data
-async function loadBalanceData() {
-    try {
-        let weekendBalance = null;
-        let monthlyBalance = null;
-        let cumulativeBalance = null;
-
-        // PRIORITY 1: Try to load from db.json first (shared across devices)
-        try {
-            const cacheBuster = Date.now();
-            const response = await fetch(`public_test/data/db.json?t=${cacheBuster}`);
-            if (response.ok) {
-                const dbData = await response.json();
-                if (dbData.cumulativeData) {
-                    monthlyBalance = dbData.cumulativeData.monthlyBalance;
-                    cumulativeBalance = dbData.cumulativeData.cumulativeBalance;
-                    console.log('✓ Loaded balance data from db.json');
-                }
-            }
-        } catch (e) {
-            console.warn('DB load failed in loadBalanceData, trying localStorage', e);
-        }
-
-        // PRIORITY 2: Check localStorage for weekend data (always from localStorage)
-        const savedWeekendData = localStorage.getItem('keibaWeekendData');
-        if (savedWeekendData) {
-            const weekendData = JSON.parse(savedWeekendData);
-            weekendBalance = {
-                balance: weekendData.balance,
-                totalPurchase: weekendData.totalPurchase,
-                totalPayout: weekendData.totalPayout,
-                period: weekendData.period || '直近の週末'
-            };
-        }
-
-        // PRIORITY 3: Fall back to localStorage for cumulative data if db.json didn't have it
-        if (monthlyBalance === null || cumulativeBalance === null) {
-            const savedCumulativeData = localStorage.getItem('keibaCumulativeData');
-            if (savedCumulativeData) {
-                const cumulativeData = JSON.parse(savedCumulativeData);
-                if (monthlyBalance === null) {
-                    monthlyBalance = cumulativeData.monthlyBalance;
-                }
-                if (cumulativeBalance === null) {
-                    cumulativeBalance = cumulativeData.cumulativeBalance;
-                }
-                console.log('✓ Loaded balance data from localStorage (fallback)');
-            }
-        }
-
-        updateBalanceCards(weekendBalance, monthlyBalance, cumulativeBalance);
-
-    } catch (error) {
-        console.error('Balance data loading error:', error);
+    if (monthlyData.has(currentYearMonth)) {
+        const currentMonthData = monthlyData.get(currentYearMonth);
+        monthlyBalance = currentMonthData.payout - currentMonthData.purchase;
+    } else if (monthlyData.size > 0) {
+        const sortedMonths = Array.from(monthlyData.keys()).sort().reverse();
+        displayYearMonth = sortedMonths[0];
+        const latestMonthData = monthlyData.get(displayYearMonth);
+        monthlyBalance = latestMonthData.payout - latestMonthData.purchase;
     }
+
+    const cumulativeBalance = totalPayout - totalPurchase;
+    
+    let weekendBalance = null;
+    if (latestDate) {
+        const year = latestDate.substring(0, 4);
+        const month = latestDate.substring(4, 6);
+        const day = latestDate.substring(6, 8);
+        weekendBalance = {
+            balance: latestDatePayout - latestDatePurchase,
+            totalPurchase: latestDatePurchase,
+            totalPayout: latestDatePayout,
+            period: `${year}/${month}/${day}`
+        };
+    }
+
+    localStorage.setItem('keibaCumulativeData', JSON.stringify({ currentYearMonth: displayYearMonth }));
+
+    return {
+        monthlyBalance,
+        cumulativeBalance,
+        weekendBalance
+    };
 }
 
 // Update Balance Cards
-function updateBalanceCards(weekendBalance = null, monthlyBalance = null, cumulativeBalance = null) {
-    // Update weekend balance
+function updateBalanceCards(weekendBalance, monthlyBalance, cumulativeBalance) {
     const weekendBalanceEl = document.getElementById('weekend-balance');
     const weekendPeriodEl = document.getElementById('weekend-period');
-
-    if (weekendBalanceEl && weekendPeriodEl) {
-        if (weekendBalance) {
-            // Use uploaded weekend CSV data
-            const balance = weekendBalance.balance;
-            const weekendSign = balance >= 0 ? '+' : '-';
-            weekendBalanceEl.textContent = `${weekendSign}¥${Math.abs(balance).toLocaleString()}`;
-            weekendBalanceEl.classList.remove('text-champagne-gold', 'text-red-500');
-            weekendBalanceEl.classList.add(balance >= 0 ? 'text-champagne-gold' : 'text-red-500');
-            weekendPeriodEl.textContent = weekendBalance.period;
-        }
+    if (weekendBalanceEl && weekendPeriodEl && weekendBalance) {
+        const balance = weekendBalance.balance;
+        const sign = balance >= 0 ? '+' : '-';
+        weekendBalanceEl.textContent = `${sign}¥${Math.abs(balance).toLocaleString()}`;
+        weekendBalanceEl.className = `text-4xl md:text-5xl font-mono font-black tracking-tighter mb-2 ${balance >= 0 ? 'text-champagne-gold' : 'text-red-500'}`;
+        weekendPeriodEl.textContent = weekendBalance.period;
     }
 
-    // Update monthly balance
     const monthlyBalanceEl = document.getElementById('monthly-balance');
     const monthlyPeriodEl = document.getElementById('monthly-period');
-
-    if (monthlyBalanceEl && monthlyPeriodEl) {
-        if (monthlyBalance !== null) {
-            const monthlySign = monthlyBalance >= 0 ? '+' : '-';
-            monthlyBalanceEl.textContent = `${monthlySign}¥${Math.abs(monthlyBalance).toLocaleString()}`;
-            monthlyBalanceEl.classList.remove('text-champagne-gold', 'text-red-500');
-            monthlyBalanceEl.classList.add(monthlyBalance >= 0 ? 'text-champagne-gold' : 'text-red-500');
-
-            // Display the actual month from the data (not necessarily current month)
-            try {
-                const cumulativeData = JSON.parse(localStorage.getItem('keibaCumulativeData') || '{}');
-                const displayYearMonth = cumulativeData.currentYearMonth;
-
-                if (displayYearMonth && displayYearMonth.length === 6) {
-                    const year = displayYearMonth.substring(0, 4);
-                    const month = parseInt(displayYearMonth.substring(4, 6));
-                    monthlyPeriodEl.textContent = `${year}年${month}月`;
-                } else {
-                    // Fallback: use current month
-                    const now = new Date();
-                    const year = now.getFullYear();
-                    const month = now.getMonth() + 1;
-                    monthlyPeriodEl.textContent = `${year}年${month}月`;
-                }
-            } catch (e) {
-                // Fallback on error
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = now.getMonth() + 1;
+    if (monthlyBalanceEl && monthlyPeriodEl && monthlyBalance !== null) {
+        const sign = monthlyBalance >= 0 ? '+' : '-';
+        monthlyBalanceEl.textContent = `${sign}¥${Math.abs(monthlyBalance).toLocaleString()}`;
+        monthlyBalanceEl.className = `text-2xl md:text-3xl font-mono font-bold tracking-tighter mb-2 ${monthlyBalance >= 0 ? 'text-champagne-gold' : 'text-red-500'}`;
+        
+        try {
+            const displayYearMonth = JSON.parse(localStorage.getItem('keibaCumulativeData') || '{}').currentYearMonth;
+            if (displayYearMonth && displayYearMonth.length === 6) {
+                const year = displayYearMonth.substring(0, 4);
+                const month = parseInt(displayYearMonth.substring(4, 6));
                 monthlyPeriodEl.textContent = `${year}年${month}月`;
             }
-        }
+        } catch (e) { }
     }
 
-    // Update cumulative balance
     const cumulativeBalanceEl = document.getElementById('cumulative-balance');
-
-    if (cumulativeBalanceEl) {
-        if (cumulativeBalance !== null) {
-            const cumulativeSign = cumulativeBalance >= 0 ? '+' : '-';
-            cumulativeBalanceEl.textContent = `${cumulativeSign}¥${Math.abs(cumulativeBalance).toLocaleString()}`;
-            cumulativeBalanceEl.classList.remove('text-champagne-gold', 'text-red-500');
-            cumulativeBalanceEl.classList.add(cumulativeBalance >= 0 ? 'text-champagne-gold' : 'text-red-500');
-        }
+    if (cumulativeBalanceEl && cumulativeBalance !== null) {
+        const sign = cumulativeBalance >= 0 ? '+' : '-';
+        cumulativeBalanceEl.textContent = `${sign}¥${Math.abs(cumulativeBalance).toLocaleString()}`;
+        cumulativeBalanceEl.className = `text-2xl md:text-3xl font-mono font-bold tracking-tighter mb-2 ${cumulativeBalance >= 0 ? 'text-champagne-gold' : 'text-red-500'}`;
     }
 }
-
-
-// Parse simple CSV format (old results.csv)
-function parseCSV(csvText) {
-    const lines = csvText.trim().split('\n');
-    const headers = lines[0].split(',');
-
-    const data = lines.slice(1).map(line => {
-        const values = line.split(',');
-        return {
-            date: values[0],
-            race: values[1],
-            investment: parseInt(values[2]),
-            return: parseInt(values[3]),
-            balance: parseInt(values[4]),
-            roi: values[5]
-        };
-    });
-
-    return data.reverse();
-}
-
-// Update last modified timestamp display (placeholder function for main page)
-function updateLastModified(timestamp) {
-    // This function is called but not used on the main page
-    // It's primarily used in the admin page
-    console.log('Data last updated:', timestamp);
-}
-
-
-
-
-
-
 
 // Calculate Summary Stats
 function calculateStats() {
@@ -369,7 +222,6 @@ function calculateStats() {
     let totalCount = 0;
 
     if (venueData.length > 0) {
-        // Detailed format
         venueData.forEach(venue => {
             totalInvestment += venue.totalInvestment;
             totalReturn += venue.totalPayout;
@@ -377,35 +229,21 @@ function calculateStats() {
             if (venue.balance > 0) winningCount++;
             totalCount++;
         });
-    } else if (raceData.length > 0) {
-        // Simple format
-        totalInvestment = raceData.reduce((sum, race) => sum + race.investment, 0);
-        totalReturn = raceData.reduce((sum, race) => sum + race.return, 0);
-        totalBalance = raceData.reduce((sum, race) => sum + race.balance, 0);
-        winningCount = raceData.filter(race => race.balance > 0).length;
-        totalCount = raceData.length;
     }
 
     const totalROI = totalInvestment > 0 ? ((totalReturn / totalInvestment) * 100).toFixed(1) : 0;
     const winRate = totalCount > 0 ? ((winningCount / totalCount) * 100).toFixed(1) : 0;
 
-    return {
-        totalROI,
-        totalBalance,
-        winRate
-    };
+    return { totalROI, totalBalance, winRate };
 }
 
 // Update Dashboard Stats
 function updateDashboard() {
     const stats = calculateStats();
-
-    // Animate numbers
     animateValue('total-roi', 0, parseFloat(stats.totalROI), 1500, '%');
     animateValue('total-balance', 0, stats.totalBalance, 1500, '円', true);
     animateValue('win-rate', 0, parseFloat(stats.winRate), 1500, '%');
 
-    // Color based on balance
     const balanceElement = document.getElementById('total-balance');
     balanceElement.classList.remove('text-champagne-gold', 'text-red-500');
     if (stats.totalBalance > 0) {
@@ -418,6 +256,7 @@ function updateDashboard() {
 // Animate Number Counter
 function animateValue(id, start, end, duration, suffix = '', isCurrency = false) {
     const element = document.getElementById(id);
+    if (!element) return;
     const range = end - start;
     const increment = range / (duration / 16);
     let current = start;
@@ -432,70 +271,38 @@ function animateValue(id, start, end, duration, suffix = '', isCurrency = false)
         let displayValue = Math.floor(current);
         if (isCurrency) {
             displayValue = displayValue.toLocaleString('ja-JP');
-            if (end > 0) {
-                displayValue = '+' + displayValue;
-            }
+            if (end > 0) displayValue = '+' + displayValue;
         } else {
             displayValue = displayValue.toFixed(1);
         }
-
         element.textContent = displayValue + suffix;
     }, 16);
 }
 
-// Render Race Cards (for detailed format)
+// Render Race Cards
 function renderVenueCards(filterWinningOnly = false) {
-    // Check if cards container already exists (re-render case)
     let cardsContainer = document.getElementById('venue-cards-container');
-
     if (!cardsContainer) {
-        // Initial render: find the table body and replace its parent structure
         const container = document.getElementById('race-table-body');
-
-        if (!container) {
-            console.error('Cannot find race-table-body element');
-            return;
-        }
-
-        if (venueData.length === 0) {
-            // Fall back to simple table if no venue data
-            renderTable();
-            return;
-        }
-
-        // Clear and replace with cards
+        if (!container) return;
+        
         const parent = container.parentElement.parentElement;
-        // Updated layout for horizontal scrolling
-        parent.innerHTML = `
-            <div id="venue-cards-container" class="flex flex-nowrap gap-4 overflow-x-auto pb-8 snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0">
-                <!-- Cards will be injected here -->
-            </div>
-        `;
-
+        parent.innerHTML = `<div id="venue-cards-container" class="flex flex-nowrap gap-4 overflow-x-auto pb-8 snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0"></div>`;
         cardsContainer = document.getElementById('venue-cards-container');
     } else {
-        // Re-render: just clear the existing container
         cardsContainer.innerHTML = '';
     }
 
-    // Reverse the array to show newest first (left side)
     const reversedData = [...venueData].reverse();
-
     reversedData.forEach(race => {
-        // Skip non-winning races if filter is enabled
-        if (filterWinningOnly && race.balance <= 0) {
-            return;
-        }
+        if (filterWinningOnly && race.balance <= 0) return;
 
         const hitStatus = calculateHitStatus(race.totalPayout, race.totalInvestment);
         const roi = race.totalInvestment > 0 ? ((race.totalPayout / race.totalInvestment) * 100).toFixed(0) : 0;
-
-        // Format date
         const dateStr = race.date;
         const formattedDate = `${dateStr.substring(0, 4)}/${dateStr.substring(4, 6)}/${dateStr.substring(6, 8)}`;
 
-        // Determine card style based on hit status
-        let cardClass = 'venue-card flex-none w-[85%] md:w-[350px] snap-center'; // Fixed width for horizontal scroll
+        let cardClass = 'venue-card flex-none w-[85%] md:w-[350px] snap-center';
         let statusIcon = '';
         let statusText = '';
         let statusClass = '';
@@ -532,7 +339,6 @@ function renderVenueCards(filterWinningOnly = false) {
                 </div>
                 <div class="text-4xl ${statusClass.split(' ')[0]}">${statusIcon}</div>
             </div>
-            
             <div class="border-t border-gray-800 pt-4 mb-4">
                 <div class="grid grid-cols-2 gap-4 text-sm">
                     <div>
@@ -545,113 +351,51 @@ function renderVenueCards(filterWinningOnly = false) {
                     </div>
                 </div>
             </div>
-            
             <div class="border-t border-gray-800 pt-4">
                 <p class="text-gray-500 text-sm mb-2">収支</p>
                 <p class="${statusClass}">${statusIcon} ${statusText}</p>
                 ${hitTypesHTML}
             </div>
         `;
-
         cardsContainer.appendChild(card);
-    });
-}
-
-// Render Race History Table (for simple format)
-function renderTable() {
-    const tbody = document.getElementById('race-table-body');
-
-    if (!tbody) return;
-
-    tbody.innerHTML = '';
-
-    raceData.forEach(race => {
-        const row = document.createElement('tr');
-        row.classList.add('hover:bg-gray-900', 'transition-colors');
-
-        const balanceClass = race.balance > 0 ? 'balance-positive' : 'balance-negative';
-        const balanceSign = race.balance > 0 ? '+' : '';
-
-        row.innerHTML = `
-            <td class="py-4 px-4 font-mono text-sm">${race.date}</td>
-            <td class="py-4 px-4">${race.race}</td>
-            <td class="py-4 px-4 text-right font-mono">¥${race.investment.toLocaleString()}</td>
-            <td class="py-4 px-4 text-right font-mono">¥${race.return.toLocaleString()}</td>
-            <td class="py-4 px-4 text-right font-mono font-bold ${balanceClass}">${balanceSign}¥${Math.abs(race.balance).toLocaleString()}</td>
-            <td class="py-4 px-4 text-right font-mono ${balanceClass}">${race.roi}</td>
-        `;
-
-        tbody.appendChild(row);
     });
 }
 
 // Render Chart
 function renderChart() {
-    const ctx = document.getElementById('balanceChart').getContext('2d');
-
-    // Destroy existing chart if it exists
-    if (chart) {
-        chart.destroy();
-    }
+    const ctx = document.getElementById('balanceChart')?.getContext('2d');
+    if (!ctx) return;
+    
+    if (chart) chart.destroy();
 
     let labels = [];
     let cumulativeBalance = [];
 
     if (venueData.length > 0) {
-        // Aggregate data by date
         const sortedVenues = [...venueData].sort((a, b) => a.date.localeCompare(b.date));
-
-        // Group by date
         const dailyData = {};
         sortedVenues.forEach(venue => {
             const dateStr = venue.date;
-            if (!dailyData[dateStr]) {
-                dailyData[dateStr] = {
-                    date: dateStr,
-                    balance: 0
-                };
-            }
+            if (!dailyData[dateStr]) dailyData[dateStr] = { date: dateStr, balance: 0 };
             dailyData[dateStr].balance += venue.balance;
         });
 
-        // Convert to array and calculate cumulative
         const dailyArray = Object.values(dailyData).sort((a, b) => a.date.localeCompare(b.date));
-
         let cumulative = 0;
         dailyArray.forEach(day => {
             const dateStr = day.date;
-            // Format: YYYY/MM/DD -> MM/DD
-            const year = dateStr.substring(0, 4);
             const month = dateStr.substring(4, 6);
             const dayNum = dateStr.substring(6, 8);
-            const formattedDate = `${month}/${dayNum}`;
-
             cumulative += day.balance;
-            labels.push(formattedDate);
+            labels.push(`${month}/${dayNum}`);
             cumulativeBalance.push(cumulative);
-        });
-    } else if (raceData.length > 0) {
-        // Simple format - display by day
-        const chartData = [...raceData].reverse();
-
-        let cumulative = 0;
-        chartData.forEach(race => {
-            cumulative += race.balance;
-            // Extract month/day from date (assuming format like "2026/01/04")
-            const dateParts = race.date.split('/');
-            if (dateParts.length >= 3) {
-                const formattedDate = `${dateParts[1]}/${dateParts[2]}`;
-                labels.push(formattedDate);
-                cumulativeBalance.push(cumulative);
-            }
         });
     }
 
-    // Calculate Y-axis range to center 0
     const maxValue = Math.max(...cumulativeBalance, 0);
     const minValue = Math.min(...cumulativeBalance, 0);
     const maxAbsValue = Math.max(Math.abs(maxValue), Math.abs(minValue));
-    const yAxisMax = maxAbsValue * 1.2; // Add 20% padding
+    const yAxisMax = maxAbsValue * 1.2;
     const yAxisMin = -maxAbsValue * 1.2;
 
     chart = new Chart(ctx, {
@@ -677,19 +421,12 @@ function renderChart() {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    display: false
-                },
+                legend: { display: false },
                 tooltip: {
-                    backgroundColor: '#000',
-                    titleColor: '#D4AF37',
-                    bodyColor: '#fff',
-                    borderColor: '#D4AF37',
-                    borderWidth: 1,
-                    padding: 12,
-                    displayColors: false,
+                    backgroundColor: '#000', titleColor: '#D4AF37', bodyColor: '#fff',
+                    borderColor: '#D4AF37', borderWidth: 1, padding: 12, displayColors: false,
                     callbacks: {
-                        label: function (context) {
+                        label: function(context) {
                             const value = context.parsed.y;
                             const sign = value >= 0 ? '+' : '';
                             return '累積: ' + sign + '¥' + value.toLocaleString();
@@ -698,146 +435,109 @@ function renderChart() {
                 }
             },
             scales: {
-                x: {
-                    grid: {
-                        color: '#2a2a2a',
-                        drawBorder: false
-                    },
-                    ticks: {
-                        color: '#666',
-                        maxRotation: 0,
-                        minRotation: 0
-                    }
-                },
+                x: { grid: { color: '#2a2a2a', drawBorder: false }, ticks: { color: '#666', maxRotation: 0, minRotation: 0 } },
                 y: {
-                    min: yAxisMin,
-                    max: yAxisMax,
+                    min: yAxisMin, max: yAxisMax,
                     grid: {
-                        color: function (context) {
-                            // Highlight the zero line
-                            if (context.tick.value === 0) {
-                                return '#666';
-                            }
-                            return '#2a2a2a';
-                        },
-                        lineWidth: function (context) {
-                            if (context.tick.value === 0) {
-                                return 2;
-                            }
-                            return 1;
-                        },
+                        color: (context) => context.tick.value === 0 ? '#666' : '#2a2a2a',
+                        lineWidth: (context) => context.tick.value === 0 ? 2 : 1,
                         drawBorder: false
                     },
                     ticks: {
-                        color: function (context) {
-                            // Highlight zero tick
-                            if (context.tick.value === 0) {
-                                return '#999';
-                            }
-                            return '#666';
-                        },
-                        callback: function (value) {
-                            const sign = value > 0 ? '+' : '';
-                            return sign + '¥' + value.toLocaleString();
+                        color: (context) => context.tick.value === 0 ? '#999' : '#666',
+                        callback: function(value) {
+                            return (value > 0 ? '+' : '') + '¥' + value.toLocaleString();
                         }
                     }
                 }
             },
-            interaction: {
-                intersect: false,
-                mode: 'index'
-            }
+            interaction: { intersect: false, mode: 'index' }
         }
     });
 }
 
-// Scroll Animation Observer
+// Scroll Animations
 function setupScrollAnimations() {
     const sections = document.querySelectorAll('section');
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('visible');
         });
-    }, {
-        threshold: 0.1
-    });
-
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
 }
 
 // Error Display
 function showError() {
-    document.getElementById('total-roi').textContent = 'ERROR';
-    document.getElementById('total-balance').textContent = 'ERROR';
-    document.getElementById('win-rate').textContent = 'ERROR';
-
-    const tbody = document.getElementById('race-table-body');
-    if (tbody) {
-        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-red-500">データの読み込みに失敗しました</td></tr>';
-    }
+    const totalRoi = document.getElementById('total-roi');
+    const totalBal = document.getElementById('total-balance');
+    const winRate = document.getElementById('win-rate');
+    
+    if (totalRoi) totalRoi.textContent = 'ERROR';
+    if (totalBal) totalBal.textContent = 'ERROR';
+    if (winRate) winRate.textContent = 'ERROR';
 }
 
-// Load Admin Message from db.json and display on top page
-async function loadAdminMessage() {
-    let message = null;
-    let updatedAt = '';
-
-    // PRIORITY 1: db.json
+// Main Load Function
+async function loadGasData() {
     try {
-        const cacheBuster = Date.now();
-        const response = await fetch(`public_test/data/db.json?t=${cacheBuster}`);
-        if (response.ok) {
-            const db = await response.json();
-            if (db.adminMessage) {
-                message = db.adminMessage.text || '';
-                updatedAt = db.adminMessage.updatedAt || '';
+        console.log('Fetching data from Google Sheets...');
+        const response = await fetch(GAS_URL);
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        const data = await response.json();
+        
+        // 1. Process Results
+        if (data.results && data.results.length > 0) {
+            const rawData = parseGasResults(data.results);
+            venueData = groupByRaceName(rawData);
+            
+            const balances = parseCumulativeFromGas(data.results);
+            if (balances) {
+                updateBalanceCards(balances.weekendBalance, balances.monthlyBalance, balances.cumulativeBalance);
             }
         }
-    } catch (e) {
-        console.warn('db.json adminMessage load failed, trying localStorage:', e);
-    }
-
-    // PRIORITY 2: localStorage fallback
-    if (message === null) {
-        try {
-            const saved = localStorage.getItem('keibaAdminMessage');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                message = parsed.text || '';
-                updatedAt = parsed.updatedAt || '';
+        
+        // 2. Process Settings
+        if (data.settings) {
+            if (data.settings.adminMessage) {
+                const section = document.getElementById('admin-message-section');
+                const textEl = document.getElementById('admin-message-text');
+                if (section && textEl) {
+                    textEl.textContent = data.settings.adminMessage;
+                    section.classList.remove('hidden');
+                }
             }
-        } catch (e) { /* ignore */ }
-    }
-
-    const section = document.getElementById('admin-message-section');
-    const textEl = document.getElementById('admin-message-text');
-    const dateEl = document.getElementById('admin-message-date');
-
-    if (section && textEl && message) {
-        textEl.textContent = message;
-        if (dateEl && updatedAt) {
-            dateEl.textContent = `更新: ${updatedAt}`;
+            
+            if (data.settings.qrImageUrl) {
+                const qrCodeImage = document.getElementById('qr-code-image');
+                if (qrCodeImage) {
+                    qrCodeImage.src = data.settings.qrImageUrl;
+                    qrCodeImage.classList.remove('hidden');
+                    const placeholder = qrCodeImage.parentElement?.querySelector('div');
+                    if (placeholder) placeholder.classList.add('hidden');
+                }
+            }
         }
-        section.classList.remove('hidden');
+
+        // 3. Render Views
+        updateDashboard();
+        renderVenueCards();
+        renderChart();
+        
+    } catch (error) {
+        console.error('Data loading error:', error);
+        showError();
     }
 }
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    loadCSVData();
-    loadBalanceData();
-    loadAdminMessage();
+    loadGasData();
     setupScrollAnimations();
+    const hero = document.getElementById('hero');
+    if (hero) hero.classList.add('visible');
 
-    // Make hero visible immediately
-    document.getElementById('hero').classList.add('visible');
-
-    // Filter checkbox event listener
     const filterCheckbox = document.getElementById('filter-winning-only');
     if (filterCheckbox) {
         filterCheckbox.addEventListener('change', (e) => {
