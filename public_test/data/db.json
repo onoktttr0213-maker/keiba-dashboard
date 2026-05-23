@@ -203,9 +203,9 @@
       "raceName": "大津特別",
       "date": "20260118",
       "venue": "中山",
-      "totalInvestment": 100,
+      "totalInvestment": 1100,
       "totalPayout": 0,
-      "balance": -100,
+      "balance": -1100,
       "hitTypes": [],
       "races": [
         {
@@ -217,6 +217,16 @@
           "payout": 0,
           "hitStatus": "―",
           "balance": -100
+        },
+        {
+          "raceName": "大津特別",
+          "date": "20260118",
+          "venue": "中山",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
         }
       ]
     },
@@ -224,9 +234,9 @@
       "raceName": "日経新春杯",
       "date": "20260118",
       "venue": "京都",
-      "totalInvestment": 800,
+      "totalInvestment": 4000,
       "totalPayout": 0,
-      "balance": -800,
+      "balance": -4000,
       "hitTypes": [],
       "races": [
         {
@@ -238,6 +248,26 @@
           "payout": 0,
           "hitStatus": "―",
           "balance": -800
+        },
+        {
+          "raceName": "日経新春杯",
+          "date": "20260118",
+          "venue": "京都",
+          "betType": "3連複軸2頭ながし",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
+        },
+        {
+          "raceName": "日経新春杯",
+          "date": "20260118",
+          "venue": "京都",
+          "betType": "3連単フォーメーション",
+          "investment": 2400,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -2400
         }
       ]
     },
@@ -1731,9 +1761,9 @@
       "raceName": "分倍河原S",
       "date": "20260509",
       "venue": "東京",
-      "totalInvestment": 500,
+      "totalInvestment": 2000,
       "totalPayout": 0,
-      "balance": -500,
+      "balance": -2000,
       "hitTypes": [],
       "races": [
         {
@@ -1745,6 +1775,26 @@
           "payout": 0,
           "hitStatus": "―",
           "balance": -500
+        },
+        {
+          "raceName": "分倍河原S",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "3連複軸2頭ながし",
+          "investment": 500,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -500
+        },
+        {
+          "raceName": "分倍河原S",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "3連単フォーメーション",
+          "investment": 1000,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1000
         }
       ]
     },
@@ -1752,9 +1802,9 @@
       "raceName": "青竜S",
       "date": "20260509",
       "venue": "東京",
-      "totalInvestment": 200,
+      "totalInvestment": 1000,
       "totalPayout": 0,
-      "balance": -200,
+      "balance": -1000,
       "hitTypes": [],
       "races": [
         {
@@ -1766,6 +1816,16 @@
           "payout": 0,
           "hitStatus": "―",
           "balance": -200
+        },
+        {
+          "raceName": "青竜S",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "3連単フォーメーション",
+          "investment": 800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -800
         }
       ]
     },
@@ -1773,9 +1833,9 @@
       "raceName": "エプソムC",
       "date": "20260509",
       "venue": "東京",
-      "totalInvestment": 1700,
+      "totalInvestment": 3500,
       "totalPayout": 0,
-      "balance": -1700,
+      "balance": -3500,
       "hitTypes": [],
       "races": [
         {
@@ -1787,6 +1847,16 @@
           "payout": 0,
           "hitStatus": "―",
           "balance": -1700
+        },
+        {
+          "raceName": "エプソムC",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "3連単フォーメーション",
+          "investment": 1800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1800
         }
       ]
     },
@@ -1794,9 +1864,9 @@
       "raceName": "京都新聞杯",
       "date": "20260509",
       "venue": "京都",
-      "totalInvestment": 200,
+      "totalInvestment": 2000,
       "totalPayout": 0,
-      "balance": -200,
+      "balance": -2000,
       "hitTypes": [],
       "races": [
         {
@@ -1808,6 +1878,16 @@
           "payout": 0,
           "hitStatus": "―",
           "balance": -200
+        },
+        {
+          "raceName": "京都新聞杯",
+          "date": "20260509",
+          "venue": "東京",
+          "betType": "3連単1,2着ながしマルチ",
+          "investment": 1800,
+          "payout": 0,
+          "hitStatus": "―",
+          "balance": -1800
         }
       ]
     },
@@ -1963,5 +2043,5 @@
     "text": "G1ウィークで尻上がりに調整し、トップラインは宝塚に持っていく。\nまだ慌てるような時間じゃない。",
     "updatedAt": "2026/5/24"
   },
-  "lastUpdated": "2026/5/24 0:53:41"
+  "lastUpdated": "2026/5/24 1:03:41"
 }
