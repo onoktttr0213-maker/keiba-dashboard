@@ -234,27 +234,25 @@ function calculateStats() {
     const totalROI = totalInvestment > 0 ? ((totalReturn / totalInvestment) * 100).toFixed(1) : 0;
     const winRate = totalCount > 0 ? ((winningCount / totalCount) * 100).toFixed(1) : 0;
 
-    return { totalROI, totalBalance, winRate };
+    return { totalROI, totalBalance, totalReturn, winRate };
 }
 
 // Update Dashboard Stats
 function updateDashboard() {
     const stats = calculateStats();
     animateValue('total-roi', 0, parseFloat(stats.totalROI), 1500, '%');
-    animateValue('total-balance', 0, stats.totalBalance, 1500, '円', true);
+    animateValue('total-payout', 0, stats.totalReturn, 1500, '円', true, false);
     animateValue('win-rate', 0, parseFloat(stats.winRate), 1500, '%');
 
-    const balanceElement = document.getElementById('total-balance');
-    balanceElement.classList.remove('text-champagne-gold', 'text-red-500');
-    if (stats.totalBalance > 0) {
-        balanceElement.classList.add('text-champagne-gold');
-    } else {
-        balanceElement.classList.add('text-red-500');
+    const payoutElement = document.getElementById('total-payout');
+    if (payoutElement) {
+        payoutElement.classList.remove('text-red-500');
+        payoutElement.classList.add('text-champagne-gold');
     }
 }
 
 // Animate Number Counter
-function animateValue(id, start, end, duration, suffix = '', isCurrency = false) {
+function animateValue(id, start, end, duration, suffix = '', isCurrency = false, showSign = false) {
     const element = document.getElementById(id);
     if (!element) return;
     const range = end - start;
@@ -271,7 +269,7 @@ function animateValue(id, start, end, duration, suffix = '', isCurrency = false)
         let displayValue = Math.floor(current);
         if (isCurrency) {
             displayValue = displayValue.toLocaleString('ja-JP');
-            if (end > 0) displayValue = '+' + displayValue;
+            if (showSign && end > 0) displayValue = '+' + displayValue;
         } else {
             displayValue = displayValue.toFixed(1);
         }
