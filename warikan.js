@@ -7,7 +7,7 @@ let activeProjectId = null;
 
 let state = {
     members: [], // { id, name }
-    events: [],  // { id, title, totalAmount, roundUnit, deductions: [], payerId, notes, participants: {}, adjustments: {} }
+    events: [],  // { id, title, totalAmount, roundUnit, deductions: [], payerId, payerPaypayUrl, notes, participants: {}, adjustments: {} }
     paidStatus: {} // { memberId: boolean }
 };
 
@@ -291,15 +291,42 @@ async function triggerCopy(key, text) {
 
 function copyResultText() {
     const totals = finalTotals();
-    const lines = state.members
+    const lines = [];
+    
+    // Group by payer for PayPay links
+    const payerUrls = {};
+    state.events.forEach(ev => {
+        if (ev.payerId && ev.payerPaypayUrl && ev.payerPaypayUrl.trim()) {
+            const payer = state.members.find(m => m.id === ev.payerId);
+            if (payer) payerUrls[payer.name] = ev.payerPaypayUrl.trim();
+        }
+    });
+    
+    state.members
         .filter((m) => totals[m.id] > 0)
-        .map((m) => `${m.name}：${yen(totals[m.id])}`);
-    const text = ["【最終支払額】", ...lines].join("\n");
+        .forEach((m) => {
+            lines.push(`${m.name}：${yen(totals[m.id])}`);
+        });
+    
+    const parts = ["【最終支払額】", ...lines];
+    
+    // Add PayPay URLs
+    const urlEntries = Object.entries(payerUrls);
+    if (urlEntries.length > 0) {
+        parts.push("");
+        parts.push("💰 PayPay送金先:");
+        urlEntries.forEach(([name, url]) => {
+            parts.push(`${name}：${url}`);
+        });
+    }
+    
+    const text = parts.join("\n");
     triggerCopy("final", text);
 }
 
 function copyEventText(event) {
     const c = calcEvent(event);
+    const payerMember = event.payerId ? state.members.find(m => m.id === event.payerId) : null;
     const lines = state.members
         .filter((m) => event.participants[m.id])
         .map((m) => {
@@ -307,7 +334,13 @@ function copyEventText(event) {
             return `${m.name}：${isPayer ? "支払済（代表支払）" : yen(c.perPerson[m.id] || 0)}`;
         });
     const header = [`【${event.title}】`, `合計：${yen(event.totalAmount)}`];
+    if (payerMember) header.push(`代表支払者：${payerMember.name}`);
     if (event.notes) header.push(`備考：${event.notes}`);
+    if (event.payerPaypayUrl && event.payerPaypayUrl.trim()) {
+        header.push(``);
+        header.push(`💰 PayPay送金はこちら:`);
+        header.push(event.payerPaypayUrl.trim());
+    }
     const text = [...header, "", ...lines].join("\n");
     triggerCopy(`event-${event.id}`, text);
 }
@@ -325,6 +358,7 @@ function updateStateFromInput(target, bind) {
         if (ev) {
             if (parts[1] === "title") ev.title = value;
             if (parts[1] === "totalAmount") ev.totalAmount = value;
+            if (parts[1] === "payerPaypayUrl") ev.payerPaypayUrl = value;
             if (parts[1] === "notes") ev.notes = value;
         }
     } else if (parts[0] === "deduction") {
@@ -473,6 +507,7 @@ function setupEventListeners() {
                 roundUnit: 100,
                 deductions: [],
                 payerId: null,
+                payerPaypayUrl: "",
                 notes: "",
                 participants: Object.fromEntries(state.members.map((m) => [m.id, true])),
                 adjustments: Object.fromEntries(state.members.map((m) => [m.id, 0])),
@@ -904,6 +939,26 @@ function renderEventPanel(event) {
                         rows="2"
                         class="w-full mt-1.5 bg-pure-black text-gray-300 placeholder-gray-600 rounded-lg px-4 py-3 text-xs outline-none border border-gray-800 focus:border-champagne-gold transition-colors resize-none"
                     >${event.notes || ""}</textarea>
+                </div>
+
+                <div>
+                    <label class="text-gray-400 text-xs font-serif-jp flex items-center gap-1.5">
+                        <span style="color:#ff0033">P</span>ayPay送金URL（代表支払者へのリンク）
+                    </label>
+                    <input
+                        type="url"
+                        value="${event.payerPaypayUrl || ""}"
+                        data-bind="event.payerPaypayUrl"
+                        data-event-id="${event.id}"
+                        data-focus-id="event-paypay-${event.id}"
+                        placeholder="https://qr.paypay.ne.jp/xxxx"
+                        class="w-full mt-1.5 bg-pure-black text-gray-300 placeholder-gray-600 rounded-lg px-4 py-3 text-xs outline-none border border-gray-800 focus:border-champagne-gold transition-colors font-mono"
+                    />
+                    ${event.payerPaypayUrl && event.payerPaypayUrl.trim() ? `
+                    <p class="mt-1 text-[10px] text-green-500 font-serif-jp">✓ PayPayリンク設定済み（明細コピーに含まれます）</p>
+                    ` : `
+                    <p class="mt-1 text-[10px] text-gray-600 font-serif-jp">※設定すると明細コピー時にリンクが含まれます</p>
+                    `}
                 </div>
             </div>
         </section>
