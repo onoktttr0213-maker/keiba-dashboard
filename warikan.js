@@ -1,5 +1,9 @@
 // ---------- Storage & State ----------
-const KEY = "warikan-state-v1";
+const PROJECTS_KEY = "warikan-projects-v1";
+const ACTIVE_PROJECT_KEY = "warikan-active-project-v1";
+
+let projects = []; // { id, name, createdAt, state: { members, events, paidStatus } }
+let activeProjectId = null;
 
 let state = {
     members: [], // { id, name }
@@ -11,19 +15,137 @@ let activeTab = "members";
 let newMemberName = "";
 let copiedKey = null;
 let isComposing = false; // IME入力中フラグ
+let projectMenuOpen = false; // プロジェクトメニュー開閉
+
+// ---------- Project Management ----------
+function loadProjects() {
+    try {
+        const raw = localStorage.getItem(PROJECTS_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            projects = Array.isArray(parsed) ? parsed : [];
+        }
+    } catch (e) {
+        console.error("プロジェクト一覧の読み込みに失敗しました", e);
+        projects = [];
+    }
+}
+
+function saveProjects() {
+    try {
+        localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
+    } catch (e) {
+        console.error("プロジェクト一覧の保存に失敗しました", e);
+    }
+}
+
+function migrateOldData() {
+    // 旧フォーマット(warikan-state-v1)からの移行
+    const oldKey = "warikan-state-v1";
+    const oldRaw = localStorage.getItem(oldKey);
+    if (oldRaw && projects.length === 0) {
+        try {
+            const parsed = JSON.parse(oldRaw);
+            const hasData = (Array.isArray(parsed.members) && parsed.members.length > 0) ||
+                            (Array.isArray(parsed.events) && parsed.events.length > 0);
+            if (hasData) {
+                const proj = {
+                    id: uid(),
+                    name: "移行データ",
+                    createdAt: new Date().toISOString(),
+                    state: {
+                        members: Array.isArray(parsed.members) ? parsed.members : [],
+                        events: Array.isArray(parsed.events) ? parsed.events : [],
+                        paidStatus: (parsed.paidStatus && typeof parsed.paidStatus === "object") ? parsed.paidStatus : {}
+                    }
+                };
+                projects.push(proj);
+                activeProjectId = proj.id;
+                saveProjects();
+                localStorage.setItem(ACTIVE_PROJECT_KEY, activeProjectId);
+            }
+            localStorage.removeItem(oldKey);
+        } catch (e) {
+            // ignore
+        }
+    }
+}
+
+function createProject(name) {
+    const proj = {
+        id: uid(),
+        name: name || `プロジェクト ${projects.length + 1}`,
+        createdAt: new Date().toISOString(),
+        state: { members: [], events: [], paidStatus: {} }
+    };
+    projects.push(proj);
+    switchProject(proj.id);
+    saveProjects();
+    return proj;
+}
+
+function switchProject(projectId) {
+    // 現在のプロジェクトを保存
+    saveCurrentProjectState();
+    
+    activeProjectId = projectId;
+    localStorage.setItem(ACTIVE_PROJECT_KEY, projectId);
+    
+    const proj = projects.find(p => p.id === projectId);
+    if (proj) {
+        state.members = Array.isArray(proj.state.members) ? proj.state.members : [];
+        state.events = Array.isArray(proj.state.events) ? proj.state.events : [];
+        state.paidStatus = (proj.state.paidStatus && typeof proj.state.paidStatus === "object") ? proj.state.paidStatus : {};
+    } else {
+        state = { members: [], events: [], paidStatus: {} };
+    }
+    activeTab = "members";
+    newMemberName = "";
+    projectMenuOpen = false;
+}
+
+function saveCurrentProjectState() {
+    if (!activeProjectId) return;
+    const proj = projects.find(p => p.id === activeProjectId);
+    if (proj) {
+        proj.state = JSON.parse(JSON.stringify(state));
+        saveProjects();
+    }
+}
+
+function deleteProject(projectId) {
+    projects = projects.filter(p => p.id !== projectId);
+    saveProjects();
+    if (activeProjectId === projectId) {
+        if (projects.length > 0) {
+            switchProject(projects[0].id);
+        } else {
+            activeProjectId = null;
+            localStorage.removeItem(ACTIVE_PROJECT_KEY);
+            state = { members: [], events: [], paidStatus: {} };
+        }
+    }
+}
+
+function renameProject(projectId, newName) {
+    const proj = projects.find(p => p.id === projectId);
+    if (proj) {
+        proj.name = newName;
+        saveProjects();
+    }
+}
 
 // Initialize App
 function init() {
-    try {
-        const raw = localStorage.getItem(KEY);
-        if (raw) {
-            const parsed = JSON.parse(raw);
-            state.members = Array.isArray(parsed.members) ? parsed.members : [];
-            state.events = Array.isArray(parsed.events) ? parsed.events : [];
-            state.paidStatus = (parsed.paidStatus && typeof parsed.paidStatus === "object") ? parsed.paidStatus : {};
-        }
-    } catch (e) {
-        console.error("ローカルストレージの読み込みに失敗しました", e);
+    loadProjects();
+    migrateOldData();
+    
+    // アクティブプロジェクトを復元
+    const savedActiveId = localStorage.getItem(ACTIVE_PROJECT_KEY);
+    if (savedActiveId && projects.find(p => p.id === savedActiveId)) {
+        switchProject(savedActiveId);
+    } else if (projects.length > 0) {
+        switchProject(projects[0].id);
     }
     
     // Set up event listeners (delegation)
@@ -34,11 +156,7 @@ function init() {
 }
 
 function saveState() {
-    try {
-        localStorage.setItem(KEY, JSON.stringify(state));
-    } catch (e) {
-        console.error("保存に失敗しました", e);
-    }
+    saveCurrentProjectState();
 }
 
 // ---------- Inline SVG Icons Generator ----------
@@ -53,7 +171,11 @@ function getIcon(name, extraClasses = "") {
         copy: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
         check: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
         "check-circle": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
-        "alert-circle": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+        "alert-circle": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
+        folder: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`,
+        "folder-plus": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>`,
+        edit: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
+        chevron: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ${extraClasses}"><polyline points="6 9 12 15 18 9"></polyline></svg>`
     };
     return icons[name] || "";
 }
@@ -273,7 +395,49 @@ function setupEventListeners() {
         
         const action = btn.getAttribute("data-action");
         
-        if (action === "tab-click") {
+        // ----- Project Actions -----
+        if (action === "create-project") {
+            const name = prompt("プロジェクト名を入力してください", `プロジェクト ${projects.length + 1}`);
+            if (name !== null && name.trim()) {
+                createProject(name.trim());
+                render();
+            }
+        }
+        
+        else if (action === "switch-project") {
+            const projectId = btn.getAttribute("data-project-id");
+            switchProject(projectId);
+            render();
+        }
+        
+        else if (action === "toggle-project-menu") {
+            projectMenuOpen = !projectMenuOpen;
+            render();
+        }
+        
+        else if (action === "rename-project") {
+            const projectId = btn.getAttribute("data-project-id");
+            const proj = projects.find(p => p.id === projectId);
+            if (proj) {
+                const newName = prompt("新しいプロジェクト名を入力してください", proj.name);
+                if (newName !== null && newName.trim()) {
+                    renameProject(projectId, newName.trim());
+                    render();
+                }
+            }
+        }
+        
+        else if (action === "delete-project") {
+            const projectId = btn.getAttribute("data-project-id");
+            const proj = projects.find(p => p.id === projectId);
+            if (proj && confirm(`「${proj.name}」を削除しますか？\nこの操作は取り消せません。`)) {
+                deleteProject(projectId);
+                render();
+            }
+        }
+        
+        // ----- Tab & Content Actions -----
+        else if (action === "tab-click") {
             activeTab = btn.getAttribute("data-tab-key");
             render();
         } 
@@ -434,6 +598,95 @@ function setupEventListeners() {
     });
 }
 
+// ---------- Project Selector UI ----------
+function renderProjectSelector() {
+    const activeProj = projects.find(p => p.id === activeProjectId);
+    const activeName = activeProj ? activeProj.name : "プロジェクト未選択";
+    
+    let html = `
+    <div class="mb-6" style="position:relative">
+        <!-- Project Header -->
+        <div style="display:flex;align-items:center;gap:8px">
+            <button data-action="toggle-project-menu"
+                class="flex-1 flex items-center justify-between bg-dark-gray border border-gray-800 rounded-xl px-4 py-3 text-left transition-all hover:border-gray-700"
+                style="min-height:48px">
+                <span class="flex items-center gap-2">
+                    ${getIcon("folder", "w-4 h-4 text-champagne-gold")}
+                    <span class="text-white text-sm font-semibold">${activeName}</span>
+                </span>
+                <span class="text-gray-500 transition-transform ${projectMenuOpen ? 'rotate-180' : ''}" style="display:inline-block;${projectMenuOpen ? 'transform:rotate(180deg)' : ''}">
+                    ${getIcon("chevron", "w-4 h-4")}
+                </span>
+            </button>
+            <button data-action="create-project"
+                class="bg-gradient-to-r from-champagne-gold to-silver text-black rounded-xl transition-all active:scale-[0.95] flex items-center justify-center"
+                style="min-width:48px;min-height:48px"
+                title="新規プロジェクト">
+                ${getIcon("folder-plus", "w-5 h-5")}
+            </button>
+        </div>
+    `;
+
+    // Dropdown Panel
+    if (projectMenuOpen) {
+        html += `
+        <div class="mt-2 bg-dark-gray border border-gray-800 rounded-xl overflow-hidden" style="position:absolute;left:0;right:0;z-index:50">
+        `;
+        
+        if (projects.length === 0) {
+            html += `
+            <div class="px-4 py-6 text-center">
+                <p class="text-gray-500 text-xs font-serif-jp">プロジェクトがありません</p>
+            </div>
+            `;
+        } else {
+            html += `<ul>`;
+            projects.forEach(p => {
+                const isActive = p.id === activeProjectId;
+                const dateStr = new Date(p.createdAt).toLocaleDateString("ja-JP");
+                const memberCount = Array.isArray(p.state.members) ? p.state.members.length : 0;
+                const eventCount = Array.isArray(p.state.events) ? p.state.events.length : 0;
+                
+                html += `
+                <li class="border-b border-gray-800/50 last:border-b-0">
+                    <div style="display:flex;align-items:center;gap:0">
+                        <button data-action="switch-project" data-project-id="${p.id}"
+                            class="flex-1 text-left px-4 py-3 transition-colors ${isActive ? 'bg-champagne-gold/10' : 'hover:bg-gray-800/50'}"
+                            style="min-height:48px">
+                            <div class="flex items-center gap-2">
+                                ${isActive ? getIcon("check", "w-3 h-3 text-champagne-gold") : '<span style="width:12px;height:12px;display:inline-block"></span>'}
+                                <span class="${isActive ? 'text-champagne-gold font-bold' : 'text-gray-300'} text-sm">${p.name}</span>
+                            </div>
+                            <div class="ml-5 mt-0.5 text-gray-600 text-[10px]">
+                                ${dateStr} ・ ${memberCount}人 ・ ${eventCount}次会
+                            </div>
+                        </button>
+                        <button data-action="rename-project" data-project-id="${p.id}"
+                            class="text-gray-600 hover:text-champagne-gold transition-colors px-2"
+                            style="width:40px;height:48px;display:flex;align-items:center;justify-content:center"
+                            title="名前変更">
+                            ${getIcon("edit", "w-3.5 h-3.5")}
+                        </button>
+                        <button data-action="delete-project" data-project-id="${p.id}"
+                            class="text-gray-600 hover:text-red-500 transition-colors px-2"
+                            style="width:40px;height:48px;display:flex;align-items:center;justify-content:center"
+                            title="削除">
+                            ${getIcon("trash-2", "w-3.5 h-3.5")}
+                        </button>
+                    </div>
+                </li>
+                `;
+            });
+            html += `</ul>`;
+        }
+        
+        html += `</div>`;
+    }
+
+    html += `</div>`;
+    return html;
+}
+
 // ---------- UI Rendering ----------
 function render(typing = false) {
     const container = document.getElementById("app-container");
@@ -454,28 +707,45 @@ function render(typing = false) {
 
     let html = "";
 
+    // 0. Render Project Selector
+    html += renderProjectSelector();
+
     // 1. Render Tab Bar (Horizontal Scrollable)
-    html += `
-    <nav class="flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-hide">
-        ${tabs.map((t) => {
-            const active = activeTab === t.key;
-            return `
-            <button data-action="tab-click" data-tab-key="${t.key}"
-                class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2.5 rounded-lg text-xs font-semibold tracking-wider transition-all border ${
-                    active
-                        ? "bg-gradient-to-r from-champagne-gold to-silver border-champagne-gold text-black shadow-md shadow-champagne-gold/20"
-                        : "bg-dark-gray border-gray-800/80 text-gray-400 hover:text-white hover:border-gray-700"
-                }">
-                ${getIcon(t.icon, "w-3.5 h-3.5")}
-                <span>${t.label}</span>
-            </button>
-            `;
-        }).join("")}
-    </nav>
-    `;
+    if (activeProjectId) {
+        html += `
+        <nav class="flex gap-2 overflow-x-auto pb-2 mb-6 scrollbar-hide">
+            ${tabs.map((t) => {
+                const active = activeTab === t.key;
+                return `
+                <button data-action="tab-click" data-tab-key="${t.key}"
+                    class="flex items-center gap-1.5 whitespace-nowrap px-4 py-2.5 rounded-lg text-xs font-semibold tracking-wider transition-all border ${
+                        active
+                            ? "bg-gradient-to-r from-champagne-gold to-silver border-champagne-gold text-black shadow-md shadow-champagne-gold/20"
+                            : "bg-dark-gray border-gray-800/80 text-gray-400 hover:text-white hover:border-gray-700"
+                    }">
+                    ${getIcon(t.icon, "w-3.5 h-3.5")}
+                    <span>${t.label}</span>
+                </button>
+                `;
+            }).join("")}
+        </nav>
+        `;
+    }
 
     // 2. Render active panel
-    if (activeTab === "members") {
+    if (!activeProjectId) {
+        html += `
+        <div class="text-center py-16">
+            <div class="text-gray-600 mb-4">${getIcon("folder", "w-12 h-12 mx-auto")}</div>
+            <p class="text-gray-500 font-serif-jp text-sm mb-6">プロジェクトを作成して始めましょう</p>
+            <button data-action="create-project"
+                class="bg-gradient-to-r from-champagne-gold to-silver text-black font-bold rounded-xl px-8 py-3 text-sm transition-all active:scale-[0.98]"
+                style="min-height:48px">
+                ${getIcon("folder-plus", "w-4 h-4 inline-block mr-1")} 新規プロジェクト作成
+            </button>
+        </div>
+        `;
+    } else if (activeTab === "members") {
         html += renderMembersPanel();
     } else if (activeTab === "result") {
         html += renderResultPanel();
